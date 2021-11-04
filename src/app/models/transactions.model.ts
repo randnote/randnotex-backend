@@ -1,7 +1,6 @@
 import express, { Application, Request, Response, NextFunction } from "express";
 const sql = require("./db");
 
-
 /*I have to edit this entire file... this is temporary....*/
 
 interface userType {

@@ -9,7 +9,6 @@ exports.create = (req: Request, res: Response) => {
 		console.log("empty");
 	}
 
-
 	// Transactions are a bit complicated to think and work on
 	// I first need to go create the transaction route in the blockchain and come back to this...
 	const transaction = new Transaction({
@@ -19,7 +18,6 @@ exports.create = (req: Request, res: Response) => {
 		password: req.body.password,
 		verifiedEmail: req.body.verifiedEmail,
 	});
-
 
 	Transaction.create(transaction, (err: Error, data: object) => {
 		if (err)
@@ -54,7 +52,8 @@ exports.findOne = (req: any, res: any) => {
 			} else {
 				res.status(500).send({
 					message:
-						"Error retrieving Transaction with id " + req.params.userId,
+						"Error retrieving Transaction with id " +
+						req.params.userId,
 				});
 			}
 		} else res.send(data);

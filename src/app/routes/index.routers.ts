@@ -14,6 +14,4 @@ module.exports = (app: Application) => {
 	app.post("/transaction", User.create); // make a transaction
 	app.post("/transactions", User.findAll); // get  all transactions
 	app.post("/transactions/:userId", User.findOne); // make a transaction
-
-
 };

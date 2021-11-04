@@ -3,7 +3,6 @@ require("custom-env").env();
 // const path = require('path');
 // require('dotenv').config({ path: path.join(__dirname, ../../../.env.${process.env.NODE_ENV})});
 
-
 // /*
 // So asically i have to fetch all the users in the database that i wanna send the email to and
 // */
