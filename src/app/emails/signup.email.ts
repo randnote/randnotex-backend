@@ -3,8 +3,6 @@ require("custom-env").env();
 // const path = require('path');
 // require('dotenv').config({ path: path.join(__dirname, ../../../.env.${process.env.NODE_ENV})});
 
-// require('dotenv').config({ path: `../../../.env.${process.env.NODE_ENV}` })
-// import smtpTransport from 'nodemailer-smtp-transport';
 
 // /*
 // So asically i have to fetch all the users in the database that i wanna send the email to and
@@ -39,7 +37,7 @@ require("custom-env").env();
 //   }
 // });
 
-const send = () => {
-	console.log(process.env.EMAILPASSWORD, __dirname);
-};
-export default send;
+// const send = () => {
+// 	console.log(process.env.EMAILPASSWORD, __dirname);
+// };
+// export default send;

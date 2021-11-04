@@ -1,5 +1,5 @@
 import { Application, Request, Response, NextFunction } from "express";
-import User from "../models/user.model";
+import User from "../models/users.model";
 
 exports.create = (req: Request, res: Response) => {
 	// Validate request
