@@ -7,3 +7,4 @@ main.env
 development.env
 staging.env
 production.env
+password.ts

@@ -1,10 +1,19 @@
 import nodemailer from "nodemailer";
-require("custom-env").env();
+import emailPassword from "../../password";
 
 const transporter = nodemailer.createTransport({
 	service: "gmail",
 	auth: {
-		user: "macbaseco@gmail.com",
-		pass: process.env.EMAILPASSWORD, // naturally, replace both with your real credentials or an application-specific password
+		user: "randnotex@gmail.com",
+		pass:emailPassword // naturally, replace both with your real credentials or an application-specific password
 	},
 });
+
+const water= () =>{
+	console.log(emailPassword)
+}
+
+export default water;
+
+
+

@@ -1,5 +1,6 @@
 #!/usr/bin/env nodejs:
 import express, { Application, Request, Response, NextFunction } from "express";
+import water from "./app/emails/email.config";
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const app: Application = express();
@@ -38,5 +39,5 @@ app.use(
 // require("./app/routes/modules.routers")(app);
 // require("./app/emails/admins/login.email"); // still buggy
 // send();
-
+water();
 app.listen(8024, () => console.log(`server started on port 8024`));
