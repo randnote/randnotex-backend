@@ -5,9 +5,8 @@ import template from "./templates/signup.template";
 const mailOptions = {
 	from: "randnotex@gmail.com",
 	to: "danielromeo99@gmail.com",
-	subject: "Welcome to Randnote!",
-	text: "Dudes, this is a test email",
-	html: template, // html body
+	subject: "Your received 0.00034 Note",
+	html: template, 
 };
 
 transporter.sendMail(mailOptions, function (error: any, info: any) {

@@ -1,4 +1,3 @@
-let template: string = 
-`<b>helellllllll</b>`;
+let template: string = `<b>helellllllll</b>`;
 
 export default template;

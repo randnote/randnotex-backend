@@ -5,7 +5,6 @@ const bodyParser = require("body-parser");
 const app: Application = express();
 // import send from "./app/emails";
 
-
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 
