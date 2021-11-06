@@ -1,12 +1,12 @@
 import nodemailer from "nodemailer";
 import transporter from "./email.config";
-import template from "./templates/signup.template";
+// import template from "./templates/signup.template";
 
 const mailOptions = {
 	from: "randnotex@gmail.com",
 	to: "danielromeo99@gmail.com",
 	subject: "Your received 0.00034 Note",
-	html: template, 
+	html: '',
 };
 
 transporter.sendMail(mailOptions, function (error: any, info: any) {

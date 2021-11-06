@@ -1,5 +1,9 @@
 import nodemailer from "nodemailer";
 import emailPassword from "../../password";
+const hbs = require('nodemailer-express-handlebars')
+
+const fs = require('fs');
+const path = require('path');
 
 const transporter = nodemailer.createTransport({
 	host: "smtp.gmail.com",
@@ -12,5 +16,11 @@ const transporter = nodemailer.createTransport({
 	},
 	tls: { rejectUnauthorized: false },
 });
+
+transporter.use('compile', hbs({
+	viewEngine: 'express-handlebars',
+	viewPath: './emailtemplates'
+
+}))
 
 export default transporter;
