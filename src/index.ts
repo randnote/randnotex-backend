@@ -31,7 +31,8 @@ app.use(
 	})
 );
 
-// require("./app/config/createTables");
+console.log("eh")
+require("./app/config/createTables");
 // require("./app/routes/admins.routers")(app);
 // require("./app/routes/teachers.routers")(app);
 // require("./app/routes/students.routers")(app);

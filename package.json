@@ -8,10 +8,10 @@
 	],
 	"scripts": {
 		"production": "cd ./dist && node ./index.js",
-		"dev": "cd ./dist && node ./index.js",
+		"dev": "yarn run build && cd ./dist && node ./index.js",
 		"build": "yarn run copy-files && tsc ",
 		"prepare": "npm run build",
-		"copy-files": "COPY ./emailtemplates ./dist",
+		"copy-files": "cp  -r ./emailtemplates dist/",
 		"prettier": "prettier --use-tabs --tab-width 4 --write ."
 	},
 	"pre-commit": [
@@ -26,6 +26,7 @@
 		"custom-env": "^2.0.1",
 		"dotenv": "^10.0.0",
 		"express": "^4.17.1",
+		"mysql": "^2.18.1",
 		"nodemailer": "^6.7.0",
 		"nodemailer-express-handlebars": "^4.0.0",
 		"pre-commit": "^1.2.2",
