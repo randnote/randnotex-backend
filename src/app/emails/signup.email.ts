@@ -6,7 +6,7 @@ const mailOptions = {
 	to: "danielromeo99@gmail.com",
 	subject: "Welcome to Randnote!",
 	text: "Dudes, this is a test email",
-	template: 'signup'
+	template: "signup",
 };
 
 transporter.sendMail(mailOptions, function (error: any, info: any) {

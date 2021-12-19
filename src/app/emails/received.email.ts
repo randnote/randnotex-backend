@@ -6,7 +6,7 @@ const mailOptions = {
 	from: "randnotex@gmail.com",
 	to: "danielromeo99@gmail.com",
 	subject: "Your received 0.00034 Note",
-	html: '',
+	html: "",
 };
 
 transporter.sendMail(mailOptions, function (error: any, info: any) {
