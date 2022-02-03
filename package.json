@@ -8,8 +8,11 @@
 	],
 	"scripts": {
 		"production": "cd ./dist && node ./index.js",
+		"devd": "yarn run buildd && cd ./dist && node ./index.js",
+		"buildd": "yarn run copy-files && tsc ",
+
 		"dev": "yarn run build && cd ./dist && node ./index.js",
-		"build": "yarn run copy-files && tsc ",
+		"build": " tsc ",
 		"prepare": "npm run build",
 		"copy-files": "cp  -r ./emailtemplates dist/",
 		"prettier": "prettier --use-tabs --tab-width 4 --write ."
