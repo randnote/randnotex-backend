@@ -32,7 +32,7 @@ app.use(
 );
 
 require("./app/config/createTables");
-// require("./app/routes/admins.routers")(app);
+require("./app/routes/index.routers")(app);
 // require("./app/routes/teachers.routers")(app);
 // require("./app/routes/students.routers")(app);
 // require("./app/routes/modules.routers")(app);
