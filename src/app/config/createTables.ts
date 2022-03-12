@@ -37,5 +37,5 @@ connection.connect((err: Error) => {
 	console.log("Successfully connected to the database.");
 	createTable(createUsers, "Successfully created the users table");
 	createTable(createAddresses, "Successfully created the addresses table");
-	createTable(createCards, "Successfully created the cards table")
+	createTable(createCards, "Successfully created the cards table");
 });
