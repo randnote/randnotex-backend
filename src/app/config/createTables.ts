@@ -1,6 +1,7 @@
 // import queries:
 import { createUsers } from "./tables/createTable.users";
 import { createAddresses } from "./tables/createTable.addresses";
+import { createCards } from "./tables/createTable.cards";
 
 // import mysql functions:
 const mysql = require("mysql");
@@ -36,4 +37,5 @@ connection.connect((err: Error) => {
 	console.log("Successfully connected to the database.");
 	createTable(createUsers, "Successfully created the users table");
 	createTable(createAddresses, "Successfully created the addresses table");
+	createTable(createCards, "Successfully created the cards table")
 });

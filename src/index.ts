@@ -33,10 +33,6 @@ app.use(
 
 require("./app/config/createTables");
 require("./app/routes/index.routers")(app);
-// require("./app/routes/teachers.routers")(app);
-// require("./app/routes/students.routers")(app);
-// require("./app/routes/modules.routers")(app);
-// require("./app/emails/admins/login.email"); // still buggy
 
 // require('./app/emails/signup.email')
 app.listen(8024, () => console.log(`server started on port 8024`));
