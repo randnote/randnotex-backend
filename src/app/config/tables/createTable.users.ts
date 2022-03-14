@@ -5,5 +5,6 @@ export let createUsers: string = `create table if not exists users(
     lastname varchar(200)not null,
     email varchar(200)not null,
     password varchar(255) not null,
-    verifiedemail varchar(255) not null
+    verifiedemail varchar(255) not null,
+    balance int DEFAULT '0'
 )`;
