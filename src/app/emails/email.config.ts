@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-import emailPassword from "../../password";
+// import emailPassword from "../../password";
 const hbs = require("nodemailer-express-handlebars");
 
 const fs = require("fs");
@@ -12,7 +12,7 @@ const transporter = nodemailer.createTransport({
 	// service: "gmail",
 	auth: {
 		user: "randnotex@gmail.com",
-		pass: emailPassword, // naturally, replace both with your real credentials or an application-specific password
+		pass: "..", // naturally, replace both with your real credentials or an application-specific password
 	},
 	tls: { rejectUnauthorized: false },
 });
