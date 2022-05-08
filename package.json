@@ -13,7 +13,7 @@
 		"dev": "yarn run build && cd ./dist && node ./index.js",
 		"build": " tsc ",
 		"prepare": "npm run build",
-		"copy-files": "cp  -r ./emailtemplates dist/",
+		"copy-files": "sudo cp  -r ./emailtemplates dist/",
 		"prettier": "prettier --use-tabs --tab-width 4 --write ."
 	},
 	"pre-commit": [
