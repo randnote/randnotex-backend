@@ -48,10 +48,22 @@ export default class User {
 		sql.query("SELECT * FROM users", (err: Error, res: Response) => {
 			if (err) {
 				console.log("error: ", err);
-				result(null, err);
+				result(err, null);
 				return;
 			}
 			console.log("user: ", res);
+			result(null, res);
+		});
+	}
+
+	static findAutoGens(result: any){
+		sql.query("SELECT * FROM users WHERE `email` LIKE '%randnoteGen.com' ", (err:Error, res:Response) =>{
+			if(err){
+				console.log("error: ", err)
+				result(err, null);
+				return;
+			}
+			console.log("Users: ", res);
 			result(null, res);
 		});
 	}

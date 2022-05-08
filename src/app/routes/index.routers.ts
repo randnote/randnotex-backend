@@ -11,6 +11,9 @@ module.exports = (app: Application) => {
 	app.get("/userfindall", User.findAll);
 	app.get("/user/:userId", User.findOne);
 
+	// get users that are auto generated... (meaning, that have the email address : johnDoe@randnotex.com)
+	app.get("/userfindAutoGens", User.findAutoGens)
+
 	// transactions
 	app.post("/transaction", User.create); // make a transaction
 	app.post("/transactions", User.findAll); // get  all transactions

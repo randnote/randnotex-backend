@@ -60,6 +60,18 @@ exports.findOne = (req: any, res: any) => {
 	});
 };
 
+exports.findAutoGens = (req: any, res: any) =>{
+	User.findAutoGens((err: any, data: any): any => {
+		if (err)
+			res.status(500).send({
+				message:
+					err.message ||
+					"Some error occurred while retrieving Users.",
+			});
+		else res.send(data);
+	});
+}
+
 exports.login = (req: any, res: any) => {
 	if (!req.body) {
 		res.status(400).send({
