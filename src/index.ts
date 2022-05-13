@@ -3,7 +3,15 @@ import express, { Application, Request, Response, NextFunction } from "express";
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const app: Application = express();
-// import send from "./app/emails";
+const socketIo = require("socket.io");
+const http = require("http");
+
+
+
+
+// ---------------- end of socket io testing -------------------
+
+
 
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
@@ -31,8 +39,42 @@ app.use(
 	})
 );
 
+const server = http.createServer(app);
+// const io = socketIo(server);
+const io = require("socket.io")(server, {
+	cors: {
+	  origin: "http://localhost:3000",
+	  methods: ["GET", "POST"]
+	}
+  });
+
+
+
+let interval;
+
+io.on("connection", (socket: any) => {
+	console.log("New client connected");
+	if (interval) {
+	  clearInterval(interval);
+	}
+	interval = setInterval(() => getApiAndEmit(socket), 1000);
+	socket.on("disconnect", () => {
+	  console.log("Client disconnected");
+	  clearInterval(interval);
+	});
+  });
+
+  const getApiAndEmit = socket => {
+	const response = new Date();
+	// Emitting a new message. Will be consumed by the client
+	socket.emit("FromAPI", response);
+  };
+
+
+
+
 require("./app/config/createTables");
 require("./app/routes/index.routers")(app);
 
 // require('./app/emails/signup.email')
-app.listen(8024, () => console.log(`server started on port 8024`));
+server.listen(8024, () => console.log(`server started on port 8024`));

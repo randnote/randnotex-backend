@@ -1,14 +1,14 @@
 Arguments: 
-  /usr/bin/node /usr/local/bin/yarn install
+  /home/daniel/.nvm/versions/node/v14.19.1/bin/node /usr/local/bin/yarn add socket.io
 
 PATH: 
-  /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+  /home/daniel/.nvm/versions/node/v14.19.1/bin:/home/daniel/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 
 Yarn version: 
   1.22.18
 
 Node version: 
-  10.19.0
+  14.19.1
 
 Platform: 
   linux x64
@@ -32,7 +32,7 @@ npm manifest:
   		"dev": "yarn run build && cd ./dist && node ./index.js",
   		"build": " tsc ",
   		"prepare": "npm run build",
-  		"copy-files": "cp  -r ./emailtemplates dist/",
+  		"copy-files": "sudo cp  -r ./emailtemplates dist/",
   		"prettier": "prettier --use-tabs --tab-width 4 --write ."
   	},
   	"pre-commit": [

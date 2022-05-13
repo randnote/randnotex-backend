@@ -47,5 +47,9 @@ export default class Card {
 		);
 	}
 
+	// Edit a card
+
+	// Delete a card
+
 	
 } // end of the class:

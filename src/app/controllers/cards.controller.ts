@@ -29,5 +29,9 @@ exports.create = (req: Request, res: Response) => {
 			});
 		else res.send(data);
 	});
+
+	// Edit a card
+
+	// Delete a card
 };
 
