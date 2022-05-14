@@ -43,6 +43,24 @@ export default class User {
 		);
 	}
 
+	// takes and object- properties being the properties and the amount
+	// static createTransaction(obj:any, result){
+	// 	sql.query(
+	// 		// "INSERT INTO users SET ?",
+	// 		// newuser,
+	// 		// (err: Error, res: any) => {
+	// 		// 	if (err) {
+	// 		// 		console.log("error: ", err);
+	// 		// 		result(err, null);
+	// 		// 		return;
+	// 		// 	}
+
+	// 		// 	console.log("created user: ", { id: res.insertId, ...newuser });
+	// 		// 	result(null, { id: res.insertId, ...newuser });
+	// 		// }
+	// 	)
+	// }
+
 	// get all method:
 	static getAll(result: any) {
 		sql.query("SELECT * FROM users", (err: Error, res: Response) => {
