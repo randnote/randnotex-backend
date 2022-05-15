@@ -11,6 +11,6 @@ export let createTransactionWebsite: string = `create table if not exists transa
     price decimal(10,2) not null,
     type enum ('buy','sell') not null,  
     amount decimal(10,2) not null
-`
+)`
 // price represents the price of the coin at the time...
 // type is whether they are buying or selling...
