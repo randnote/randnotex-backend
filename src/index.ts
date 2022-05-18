@@ -12,7 +12,8 @@ var allowedOrigins = [
 	"http://localhost:3000", 
 	"http://locahost:3000/admin",
 	"http://localhost:3000/signup",
-	"http://localhost:3000/signin"
+	"http://localhost:3000/signin",
+	"http://localhost:3000/dashboard"
 ];
 app.use(
 	cors({
