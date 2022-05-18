@@ -2,7 +2,8 @@ import { Application } from "express";
 
 module.exports = (app: Application) => {
 	const User = require("../controllers/users.controller");
-	const Transactions = require("../controllers/transactions.controller");
+	const TransactionsBlockchain = require("../controllers/transactionsBlockchain.controller");
+	const TransactionsWebsite = require("../controllers/transactionsWebsite.controller")
 	const Card = require("../controllers/cards.controller");
 
 	//users
@@ -15,13 +16,13 @@ module.exports = (app: Application) => {
 	app.get("/userfindAutoGens", User.findAutoGens)
 
 	// transactionBlockchain
-	app.post("/transactionBlockchain", Transactions.create); // make a transaction
-	app.get("/transactionBlockchain", Transactions.findAll); // get all transactions to blockchain
-	app.get("/transactionBlockchain/:user_id", Transactions.findAll); // get all transactions per user
+	app.post("/transactionBlockchain", TransactionsBlockchain.create); // make a transaction
+	app.get("/transactionBlockchain", TransactionsBlockchain.BlockchainfindAll); // get all transactions to blockchain
+	app.get("/transactionBlockchain/:userId", TransactionsBlockchain.BlockchainfindAllUser); // get all transactions per user
 
 	// transactionWebsite
-	app.post("/transactionWebsite", Transactions.create); // make a transaction
-	app.get("/transactionWebsite/:user_id", Transactions.findAll); // get all transactions per user
+	app.post("/transactionWebsite", TransactionsWebsite.create); // make a transaction
+	app.get("/transactionWebsite/:userId", TransactionsWebsite.WebsitefindAllUser); // get all transactions per user
 
 	// cards
 	app.post("/card", Card.create); // add a card
