@@ -13,9 +13,10 @@ exports.createTransactionBlockchain = (req: Request, res: Response) => {
 		console.log("empty");
 	}
 	const transaction = new TransactionBlockchain({
-		user_id: req.body.user_id,
-		publicAddress: req.body.publicAddress,
-		amount: req.body.amount
+		user_id :req.body.user_id,
+		fromAddress: req.body.fromAddress,
+		toAddress: req.body.toAddress,
+		notes :req.body.notes
 	});
 
 	TransactionBlockchain.create(transaction, (err: Error, data: object) => {
@@ -23,7 +24,7 @@ exports.createTransactionBlockchain = (req: Request, res: Response) => {
 			res.status(500).send({
 				message:
 					err.message ||
-					"Some error occurred while creating the User.",
+					"Some error occurred while creating the transaction.",
 			});
 		else res.send(data);
 	});
@@ -47,7 +48,9 @@ exports.createTransactionWebsite = (req: Request, res: Response) => {
 		user_id: req.body.user_id,
 		type: req.body.type,
         price: req.body.price,
-		amount: req.body.amount
+		amount: req.body.amount,
+		ordertype: req.body.ordertype,
+		notes :req.body.notes
 	});
 
 	TransactionWebsite.create(transaction, (err: Error, data: object) => {
@@ -55,7 +58,7 @@ exports.createTransactionWebsite = (req: Request, res: Response) => {
 			res.status(500).send({
 				message:
 					err.message ||
-					"Some error occurred while creating the User.",
+					"Some error occurred while creating the transaction.",
 			});
 		else res.send(data);
 	});
