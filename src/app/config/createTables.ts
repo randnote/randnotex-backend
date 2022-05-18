@@ -3,6 +3,8 @@ import { createUsers } from "./tables/createTable.users";
 import { createAddresses } from "./tables/createTable.addresses";
 import { createCards } from "./tables/createTable.cards";
 import { createTransactionBlockchain, createTransactionWebsite } from "./tables/createTable.transactions";
+import { createWithdrawalsTable } from "./tables/createTable.withdrawals";
+import { createDepositsTable } from "./tables/createTable.deposits";
 
 // import mysql functions:
 const mysql = require("mysql");
@@ -41,5 +43,8 @@ connection.connect((err: Error) => {
 	createTable(createCards, "Successfully created the cards table");
 	createTable(createTransactionBlockchain, "Successfully created the transactionsBlockchain table");
 	createTable(createTransactionWebsite, "Successfully created the transactionsWebsite table");
+	createTable(createWithdrawalsTable, "Successfully created the withdrawals table");
+	createTable(createDepositsTable, "Successfully created the deposits table");
+
 
 });

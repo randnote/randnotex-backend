@@ -26,6 +26,7 @@ module.exports = (app: Application) => {
 
 	// cards
 	app.post("/card", Card.create); // add a card
+	// app.post("/deposit", Card.deposit); // create deposit
 	app.delete("/card/:cardId", Card.delete);  // is delete the right name??
 	app.get("/cards/:userId", Card.findAllUser); // get a card per user
 };
