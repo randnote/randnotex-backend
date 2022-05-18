@@ -14,16 +14,15 @@ module.exports = (app: Application) => {
 	// get users that are auto generated... (meaning, that have the email address : johnDoe@randnotex.com)
 	app.get("/userfindAutoGens", User.findAutoGens)
 
-	// transactions
-	// app.post("/transaction", User.create); // make a transaction
-	// app.post("/transactions", User.findAll); // get  all transactions
-	// app.post("/transactions/:userId", User.findOne); // make a transaction
+	// transactionBlockchain
+	app.post("/transactionBlockchain", Transactions.create); // make a transaction
+	app.get("/transactionBlockchain", Transactions.findAll); // get all transactions to blockchain
+	app.get("/transactionBlockchain/:user_id", Transactions.findAll); // get all transactions per user
 
-	// transactions: transactions will have a post where user sends money to another account
-	// app.post("/transaction", User.transaction);
-	// app.get("/transactions/:userId", User.transactions); // gets all users past transactions(recieved and made and transactions where the user has bought the currency...)
+	// transactionWebsite
+	app.post("/transactionWebsite", Transactions.create); // make a transaction
+	app.get("/transactionWebsite/:user_id", Transactions.findAll); // get all transactions per user
 
 	// cards
 	app.post("/card", Card.create); // add a card
-	// app.post("/card", Card.create); // add a card
 };
