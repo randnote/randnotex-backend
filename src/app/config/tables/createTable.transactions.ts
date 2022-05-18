@@ -1,4 +1,4 @@
-export let createTransactionBlockchain: string = `create table if not exists transactionsBlockhain(
+export let createTransactionBlockchain: string = `create table if not exists transactionsBlockchain(
     id int primary key auto_increment,
     user_id int not null,
     fromAddress MEDIUMTEXT not null,

@@ -2,7 +2,7 @@ import { Application, Request, Response, NextFunction } from "express";
 import TransactionWebsite from '../models/transactionsWebsite.model'
 
 // Create transactionWebsite:
-exports.createTransactionWebsite = (req: Request, res: Response) => {
+exports.create = (req: Request, res: Response) => {
 	// Validate request
 	if (!req.body) {
 		res.status(400).send({
@@ -31,3 +31,7 @@ exports.createTransactionWebsite = (req: Request, res: Response) => {
 };
 
 // Get all the transactionsWebsite for a single user:
+
+exports.WebsitefindAllUser = () =>{
+
+}

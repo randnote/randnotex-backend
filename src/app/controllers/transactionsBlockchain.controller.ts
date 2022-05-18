@@ -1,7 +1,7 @@
 import { Application, Request, Response, NextFunction } from "express";
 import TransactionBlockchain from '../models/transactionsBlockchain.model'
 
-exports.createTransactionBlockchain = (req: Request, res: Response) => {
+exports.create = (req: Request, res: Response) => {
 	// Validate request
 	if (!req.body) {
 		res.status(400).send({
