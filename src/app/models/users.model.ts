@@ -110,22 +110,25 @@ export default class User {
 
 	// login the user:
 	static login(obj: any, result: any) {
+		console.log(obj)
+
 		sql.query(
-			`SELECT * FROM users WHERE email = ${obj.email} AND password = ${obj.password}`,
+			`SELECT * FROM users WHERE email = '${obj.email}' AND password = '${obj.password}'`,
 			(err: Error, res: any) => {
 				if (err) {
-					result(
-						{
-							success: false,
-							message: "wrong parameters provided",
-						},
-						null
-					);
+					// result(
+					// 	{
+					// 		success: false,
+					// 		message: "wrong parameters provided",
+					// 	},
+					// 	null
+					// );
+					console.log(err)
 					return;
 				}
 
 				if (res.length) {
-					result(null, { success: "true", result: res[0] });
+					result(null, { success: true, result: res[0] });
 					// send success email here
 					return;
 				}

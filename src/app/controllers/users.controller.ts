@@ -81,14 +81,14 @@ exports.signin = (req: Request, res: Response) => {
 	}
 
 	const obj = {
-		username: req.body.username,
+		email: req.body.email,
 		password: req.body.password,
 	};
 
 	User.login(obj, (err: any, data: any) => {
 		if (err)
 			res /*.status(500)*/.send({
-				success: "false",
+				success: false,
 				message: /*err.message ||*/ "wrong username or password",
 			});
 		else res.send(data);
