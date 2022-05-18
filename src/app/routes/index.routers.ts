@@ -7,10 +7,13 @@ module.exports = (app: Application) => {
 	const Card = require("../controllers/cards.controller");
 
 	// users
-	app.post("/userlogin", User.login);
+	app.post("/signin", User.signin);
+	app.post("/signup", User.signup);
 	app.post("/usercreate", User.create);
 	app.get("/userfindall", User.findAll);
 	app.get("/user/:userId", User.findOne);
+	app.get("/zarbalance", User.zarbalance); // get zar balance
+
 
 	// get users that are auto generated... (meaning, that have the email address : johnDoe@randnotex.com)
 	app.get("/userfindAutoGens", User.findAutoGens)
@@ -26,7 +29,7 @@ module.exports = (app: Application) => {
 
 	// cards
 	app.post("/card", Card.create); // add a card
-	// app.post("/deposit", Card.deposit); // create deposit
+	app.post("/deposit", Card.deposit); // create deposit
 	app.delete("/card/:cardId", Card.delete);  // is delete the right name??
 	app.get("/cards/:userId", Card.findAllUser); // get a card per user
 };

@@ -8,6 +8,32 @@ const http = require("http");
 
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
+var allowedOrigins = [
+	"http://localhost:3000", 
+	"http://locahost:3000/admin",
+	"http://localhost:3000/signup",
+	"http://localhost:3000/signin"
+];
+app.use(
+	cors({
+		origin: function (origin: any, callback: any) {
+			// allow requests with no origin
+			// (like mobile apps or curl requests)
+			if (!origin) {
+				return callback(null, true);
+			}
+
+			if (allowedOrigins.indexOf(origin) === -1) {
+				var msg =
+					"The CORS policy for this site does not " +
+					"allow access from the specified Origin.";
+				// return callback(new Error(msg), false);
+				return callback(null, true); // allow all of em
+			}
+			return callback(null, true);
+		},
+	})
+);
 let interval;
 
 const server = http.createServer(app);

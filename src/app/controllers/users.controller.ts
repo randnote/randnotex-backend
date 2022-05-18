@@ -72,7 +72,7 @@ exports.findAutoGens = (req: any, res: any) =>{
 	});
 }
 
-exports.login = (req: any, res: any) => {
+exports.signin = (req: Request, res: Response) => {
 	if (!req.body) {
 		res.status(400).send({
 			message: "Content can not be empty!",
@@ -94,3 +94,41 @@ exports.login = (req: any, res: any) => {
 		else res.send(data);
 	});
 };
+
+exports.signup = (req: Request, res: Response) =>{
+	// Validate request
+	if (!req.body) {
+		res.status(400).send({
+			message: "Content can not be empty!",
+		});
+		console.log("empty");
+	}
+
+	const user = new User({
+		firstname: req.body.firstname,
+		lastname: req.body.lastname,
+		email: req.body.email,
+		password: req.body.password,
+		verifiedEmail: false,
+	});
+
+	// do some validation here... check if the user email already exits in the Db OR not?
+
+
+	User.create(user, (err: Error, data: object) => {
+		if (err)
+			res.status(500).send({
+				message:
+					err.message ||
+					"Some error occurred while creating the User.",
+			});
+		else res.send({
+			success: true,
+			data: data
+		});
+	});
+}
+
+exports.zarbalance = (req: Request, res: Response) =>{
+	//
+}

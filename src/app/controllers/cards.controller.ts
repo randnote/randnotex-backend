@@ -61,3 +61,8 @@ exports.delete = (req: Request, res: Response) =>{
 	});
 }
 
+exports.deposit = () =>{
+	//
+}
+
+
