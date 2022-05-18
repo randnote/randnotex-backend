@@ -6,7 +6,7 @@ module.exports = (app: Application) => {
 	const TransactionsWebsite = require("../controllers/transactionsWebsite.controller")
 	const Card = require("../controllers/cards.controller");
 
-	//users
+	// users
 	app.post("/userlogin", User.login);
 	app.post("/usercreate", User.create);
 	app.get("/userfindall", User.findAll);
@@ -26,4 +26,6 @@ module.exports = (app: Application) => {
 
 	// cards
 	app.post("/card", Card.create); // add a card
+	app.delete("/card/:cardId", Card.delete);  // is delete the right name??
+	app.get("/cards", Card.findAllUser); // get a card per user
 };

@@ -13,7 +13,6 @@ interface cardType {
 // constructor
 export default class Card {
 	private user_id: number;
-
 	private cardnumber: number;
 	private carddetails: string;
 	private month: number;
@@ -47,9 +46,45 @@ export default class Card {
 		);
 	}
 
-	// Edit a card
+	// delete a card:
+	static delete(cardId: any, result: any) {
+		sql.query(
+			"DELETE FROM cards WHERE id = ?",
+			cardId,
+			(err: Error, res: any) => {
+				if (err) {
+					console.log("error: ", err);
+					result(err, null);
+					return;
+				}
 
-	// Delete a card
+				console.log("Deleted card: ", { id: res.insertId, ...cardId });
+				result(null, { id: res.insertId, ...cardId });
+			}
+		);
+	}
+	
+	// get all cards for a particular user:
+	static getAllUser(userId: any, result:any){
+		sql.query(
+			`SELECT * FROM cards WHERE user_id = ${userId}`,
+			(err: Error, res: any) => {
+				if (err) {
+					console.log("error: ", err);
+					result(err, null);
+					return;
+				}
+
+				if (res.length) {
+					console.log("found cards: ", res);
+					result(null, res);
+					return;
+				}
+				// havent found a user:
+				result({ kind: "not_found" }, null);
+			}
+		);
+	}
 
 	
-} // end of the class:
+} // end of the class

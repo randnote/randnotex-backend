@@ -29,9 +29,35 @@ exports.create = (req: Request, res: Response) => {
 			});
 		else res.send(data);
 	});
-
-	// Edit a card
-
-	// Delete a card
 };
+
+// get all cards per user
+exports.findAllUser = (req:Request, res: Response) =>{
+	Card.getAllUser(req.params.userId, (err: any, data: any): any => {
+		if (err)
+			res.status(500).send({
+				message:
+					err.message ||
+					"Some error occurred while retrieving Users.",
+			});
+		else res.send(data);
+	});
+}
+
+exports.delete = (req: Request, res: Response) =>{
+	Card.delete(req.params.cardId, (err: any, data: any) => {
+		if (err) {
+			if (err.kind === "not_found") {
+				res.status(404).send({
+					message: `Not found User with id ${req.params.userId}.`,
+				});
+			} else {
+				res.status(500).send({
+					message:
+						"Error retrieving User with id " + req.params.userId,
+				});
+			}
+		} else res.send(data);
+	});
+}
 
