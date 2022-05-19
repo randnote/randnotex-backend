@@ -79,7 +79,6 @@ exports.signin = (req: Request, res: Response) => {
 		});
 		console.log("empty");
 	}
-
 	const obj = {
 		email: req.body.email,
 		password: req.body.password,
@@ -91,7 +90,11 @@ exports.signin = (req: Request, res: Response) => {
 				success: false,
 				message: /*err.message ||*/ "wrong username or password",
 			});
-		else res.send(data);
+			else res.send({
+				success: true,
+				data: data
+			});
+		
 	});
 };
 

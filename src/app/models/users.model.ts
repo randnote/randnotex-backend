@@ -116,24 +116,18 @@ export default class User {
 			`SELECT * FROM users WHERE email = '${obj.email}' AND password = '${obj.password}'`,
 			(err: Error, res: any) => {
 				if (err) {
-					// result(
-					// 	{
-					// 		success: false,
-					// 		message: "wrong parameters provided",
-					// 	},
-					// 	null
-					// );
+					if (err) {
+						console.log("error: ", err);
+						result(err, null);
+						return;
+					}
 					console.log(err)
 					return;
 				}
 
 				if (res.length) {
 					result(null, { success: true, result: res[0] });
-					// send success email here
-					return;
 				}
-
-				result({ kind: "not_found" }, null);
 			}
 		);
 	}
