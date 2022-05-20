@@ -13,6 +13,7 @@ module.exports = (app: Application) => {
 	app.get("/userfindall", User.findAll);
 	app.get("/user/:userId", User.findOne);
 	app.get("/zarbalance", User.zarbalance); // get zar balance
+	app.post("/deposit", User.deposit); // create deposit
 
 
 	// get users that are auto generated... (meaning, that have the email address : johnDoe@randnotex.com)
@@ -29,7 +30,7 @@ module.exports = (app: Application) => {
 
 	// cards
 	app.post("/card", Card.create); // add a card
-	app.post("/deposit", Card.deposit); // create deposit
+	
 	app.delete("/card/:cardId", Card.delete);  // is delete the right name??
 	app.get("/cards/:userId", Card.findAllUser); // get a card per user
 };

@@ -67,7 +67,7 @@ export default class Card {
 	// get all cards for a particular user:
 	static getAllUser(userId: any, result:any){
 		sql.query(
-			`SELECT * FROM cards WHERE user_id = ${userId}`,
+			`SELECT * FROM cards WHERE user_id = ${userId};`,
 			(err: Error, res: any) => {
 				if (err) {
 					console.log("error: ", err);

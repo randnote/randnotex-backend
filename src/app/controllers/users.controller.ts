@@ -86,7 +86,7 @@ exports.signin = (req: Request, res: Response) => {
 
 	User.login(obj, (err: any, data: any) => {
 		if (err)
-			res /*.status(500)*/.send({
+			res.send({
 				success: false,
 				message: /*err.message ||*/ "wrong username or password",
 			});
@@ -130,6 +130,61 @@ exports.signup = (req: Request, res: Response) =>{
 			data: data
 		});
 	});
+}
+
+exports.deposit = (req: Request, res: Response) =>{	//
+	// Validate request
+	if (!req.body) {
+		res.status(400).send({
+			message: "Content can not be empty!",
+		});
+		console.log("empty");
+	}
+
+	const information = {
+		userId: req.body.id,
+		amount: req.body.amount
+	};
+
+	console.log(req.body.id)
+	//call and get users current balance and make calculation:
+	//User.
+	// User.findById(req.body.id, (err: any, data: any) => {
+	// 	if (err) {
+	// 		if (err.kind === "not_found") {
+	// 			res.status(404).send({
+	// 				message: `Not found User with id ${req.params.userId}.`,
+	// 			});
+	// 		} else {
+	// 			res.status(500).send({
+	// 				message:
+	// 					"Error retrieving User with id " + req.params.userId,
+	// 			});
+	// 		}
+	// 	} else {
+	// 		//res.send(data)
+	// 		// found the user, now get their balance...
+	// 		console.log(data)
+	// 		let usersCurrentBalance: number = data.balance;
+	// 		let newBalance: number = usersCurrentBalance+ req.body.amount;
+
+	// 		console.log(req.body.amount)
+	// 	}
+	// });
+// }
+
+	// User.create(user, (err: Error, data: object) => {
+	// 	if (err)
+	// 		res.status(500).send({
+	// 			message:
+	// 				err.message ||
+	// 				"Some error occurred while creating the User.",
+	// 		});
+	// 	else res.send({
+	// 		success: true,
+	// 		data: data
+	// 	});
+	// });
 }
 
 exports.zarbalance = (req: Request, res: Response) =>{

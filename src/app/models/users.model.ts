@@ -128,7 +128,16 @@ export default class User {
 				if (res.length) {
 					result(null, { success: true, result: res[0] });
 				}
+
+				if(res.length === 0){
+					result({
+						success: false
+					}, null);
+				}
 			}
 		);
 	}
+
+
 } // end of the class:
+
