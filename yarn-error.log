@@ -1,8 +1,8 @@
 Arguments: 
-  /home/daniel/.nvm/versions/node/v14.19.1/bin/node /usr/local/bin/yarn add socket.io
+  /home/daniel/.nvm/versions/node/v14.19.1/bin/node /usr/local/bin/yarn add axios
 
 PATH: 
-  /home/daniel/.nvm/versions/node/v14.19.1/bin:/home/daniel/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+  /home/daniel/.local/bin:/home/daniel/.nvm/versions/node/v14.19.1/bin:/home/daniel/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 
 Yarn version: 
   1.22.18
