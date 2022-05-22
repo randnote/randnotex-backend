@@ -19,7 +19,6 @@ const getSupply = async() =>{
     return supply;
 }
 
-
 const calculatePrice = async() =>{
     let NEW_SUPPLY: number = await getSupply();
 
