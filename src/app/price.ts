@@ -1,30 +1,39 @@
 import Axios from "axios";
 
-let PRICE: number = 1;
+let PRICE: number = 1000;
+let CURRENT_SUPPLY : number = 100;
 
-const getSupply = () =>{
-   
+// this function just calls the blockchain to get the number of notes in circulation
+const getSupply = async() =>{
+    let supply = 0;
+
     // remember to add env variable here...
-	
+	await  Axios.get(`http://localhost:8033/supply`).then(
+        async(response: any) => {
+            supply = await response.data.supply;
+            return  supply;
+        }
+    ).catch(err =>{
+        console.log(err)
+    });
+    return supply;
 }
 
 
 const calculatePrice = async() =>{
-    let supply = 23;
-    
-    await  Axios.get(`http://localhost:8033/supply`).then(
-            async(response: any) => {
-                // let data = response;
-                supply = await response.data.supply;
-                return  supply;
-                // return response.data.supply;
-                // console.log(response.data);
-            }
-        ).catch(err =>{
-            console.log(err)
-        });
-    
-        return supply;
+    let NEW_SUPPLY: number = await getSupply();
+
+    // price based off of increased supply:
+    // check if old mySupply is still the same as the new, if not, it means that it increased and so we decrease the price:
+    if(CURRENT_SUPPLY !==  NEW_SUPPLY){
+        
+        let s: number = CURRENT_SUPPLY/NEW_SUPPLY;
+        s= s * 100;
+        PRICE = PRICE * s/100;
+        CURRENT_SUPPLY = NEW_SUPPLY;
+    }
+
+    return PRICE;
 }
 
 // module.exports = {calculatePrice}
