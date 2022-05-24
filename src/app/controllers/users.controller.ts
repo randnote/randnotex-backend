@@ -37,13 +37,13 @@ exports.create = async (req: Request, res: Response) => {
 	};
 
 	User.create(user, async (err: Error, data: object) => {
-		if (err)
+		if (err) {
 			res.status(500).send({
 				message:
 					err.message ||
 					"Some error occurred while creating the User.",
 			});
-		else {
+		} else {
 			// store their keys now...
 			User.addUserAddresses(
 				userAddressObject,
@@ -57,12 +57,7 @@ exports.create = async (req: Request, res: Response) => {
 								"Error while inserting addresses to the database.",
 						});
 					} else {
-						// i wanna send this . but, i realize that i need to send back the user and not this stuff...
-						// so, skip this and send the user object with the next res.send()
-						// res.send({
-						// 	success: true,
-						// 	data: data
-						// })
+						console.log("seemingly ran without error");
 					}
 				}
 			);
