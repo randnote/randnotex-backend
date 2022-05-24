@@ -163,6 +163,18 @@ exports.deposit = (req: Request, res: Response) =>{	//
 	
 }
 
-exports.zarbalance = (req: Request, res: Response) =>{
+exports.zarbalance =  (req: Request, res: Response) =>{
 	//
+	User.zarbalance(req.params.userId, (err: any, data: number)=>{
+		if(err){
+			res.status(500).send({
+				message: err.message || "An error occured while retrieving the balance."				
+			})
+		}else{
+			res.send(200).send({
+				data: data,
+				message: `userId : ${req.params.userId} has the balance of ${data}`
+			})
+		}
+	})
 }

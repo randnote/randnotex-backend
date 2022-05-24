@@ -12,7 +12,7 @@ module.exports = (app: Application) => {
 	app.post("/usercreate", User.create);
 	app.get("/userfindall", User.findAll);
 	app.get("/user/:userId", User.findOne);
-	app.get("/zarbalance", User.zarbalance); // get zar balance
+	app.get("/zarbalance/:userId", User.zarbalance); // get zar balance
 	app.post("/deposit", User.deposit); // create deposit
 
 

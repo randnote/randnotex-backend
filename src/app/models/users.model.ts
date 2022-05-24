@@ -145,6 +145,19 @@ export default class User {
 		);
 	}
 
+	static zarbalance = (userId: number | string, result: any) =>{
+		// sql.query(`SELECT balance FROM deposits WHERE user_id = ${userId}`, (err: Error, res: Response) => {
+		// 	if (err) {
+		// 		console.log("error: ", err);
+		// 		result(err, null);
+		// 		return;
+		// 	}
+		// 	console.log("zarbalance ..: ", res);
+		// 	result(null, res);
+		// });
+		console.log("zar balance work	")
+	}
+
 
 } // end of the class:
 
