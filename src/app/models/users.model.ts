@@ -1,5 +1,6 @@
 import express, { Application, Request, Response, NextFunction } from "express";
 const sql = require("./db");
+import { KeysType } from "../keys/generateKeys";
 
 export interface userType {
 	firstname: string;
@@ -13,6 +14,12 @@ export interface depositType {
 	user_id: number;
 	card_id: number;
 	amount: number;
+}
+
+export interface addressesType {
+	user_id: number;
+	publicAddress: string;
+	privateAddress: string;
 }
 
 // constructor
@@ -49,8 +56,6 @@ export default class User {
 		);
 	}
 
-	
-
 	// get all method:
 	static getAll(result: any) {
 		sql.query("SELECT * FROM users", (err: Error, res: Response) => {
@@ -64,16 +69,19 @@ export default class User {
 		});
 	}
 
-	static findAutoGens(result: any){
-		sql.query("SELECT * FROM users WHERE `email` LIKE '%randnoteGen.com' ", (err:Error, res:Response) =>{
-			if(err){
-				console.log("error: ", err)
-				result(err, null);
-				return;
+	static findAutoGens(result: any) {
+		sql.query(
+			"SELECT * FROM users WHERE `email` LIKE '%randnoteGen.com' ",
+			(err: Error, res: Response) => {
+				if (err) {
+					console.log("error: ", err);
+					result(err, null);
+					return;
+				}
+				console.log("Users: ", res);
+				result(null, res);
 			}
-			console.log("Users: ", res);
-			result(null, res);
-		});
+		);
 	}
 
 	// find an user by ID method:
@@ -98,9 +106,29 @@ export default class User {
 		);
 	}
 
+	static addUserAddresses(userAddressObject: addressesType, result) {
+		sql.query(
+			"INSERT INTO addresses SET ?",
+			userAddressObject,
+			(err: Error, res: any) => {
+				if (err) {
+					console.log("error: ", err);
+					result(err, null);
+					return;
+				}
+
+				console.log("Inserted into user addresses: ", {
+					id: res.insertId,
+					...userAddressObject,
+				});
+				result(null, { id: res.insertId, ...userAddressObject });
+			}
+		);
+	}
+
 	// login the user:
 	static login(obj: any, result: any) {
-		console.log(obj)
+		console.log(obj);
 
 		sql.query(
 			`SELECT * FROM users WHERE email = '${obj.email}' AND password = '${obj.password}'`,
@@ -111,7 +139,7 @@ export default class User {
 						result(err, null);
 						return;
 					}
-					console.log(err)
+					console.log(err);
 					return;
 				}
 
@@ -119,33 +147,32 @@ export default class User {
 					result(null, { success: true, result: res[0] });
 				}
 
-				if(res.length === 0){
-					result({
-						success: false
-					}, null);
+				if (res.length === 0) {
+					result(
+						{
+							success: false,
+						},
+						null
+					);
 				}
 			}
 		);
 	}
 
-	static deposit = (obj: depositType, result: any) =>{
-		sql.query(
-			"INSERT INTO deposits SET ?",
-			obj,
-			(err: Error, res: any) => {
-				if (err) {
-					console.log("error: ", err);
-					result(err, null);
-					return;
-				}
-
-				console.log("created deposit: ", { id: res.insertId, ...obj });
-				result(null, { id: res.insertId, ...obj });
+	static deposit = (obj: depositType, result: any) => {
+		sql.query("INSERT INTO deposits SET ?", obj, (err: Error, res: any) => {
+			if (err) {
+				console.log("error: ", err);
+				result(err, null);
+				return;
 			}
-		);
-	}
 
-	static zarbalance = (userId: number | string, result: any) =>{
+			console.log("created deposit: ", { id: res.insertId, ...obj });
+			result(null, { id: res.insertId, ...obj });
+		});
+	};
+
+	static zarbalance = (userId: number | string, result: any) => {
 		// sql.query(`SELECT balance FROM deposits WHERE user_id = ${userId}`, (err: Error, res: Response) => {
 		// 	if (err) {
 		// 		console.log("error: ", err);
@@ -155,9 +182,6 @@ export default class User {
 		// 	console.log("zarbalance ..: ", res);
 		// 	result(null, res);
 		// });
-		console.log("zar balance work	")
-	}
-
-
+		console.log("zar balance work	");
+	};
 } // end of the class:
-

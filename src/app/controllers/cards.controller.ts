@@ -32,9 +32,9 @@ exports.create = (req: Request, res: Response) => {
 };
 
 // get all cards per user
-exports.findAllUser = (req:Request, res: Response) =>{
+exports.findAllUser = (req: Request, res: Response) => {
 	Card.getAllUser(req.params.userId, (err: any, data: any): any => {
-		if (err){
+		if (err) {
 			res.status(500).send({
 				message:
 					err.message ||
@@ -45,16 +45,16 @@ exports.findAllUser = (req:Request, res: Response) =>{
 		// 	success: 200,
 		// 	res: res
 		// }));
-		else{
+		else {
 			res.status(200).send({
 				success: true,
-				result: data
-			})
+				result: data,
+			});
 		}
 	});
-}
+};
 
-exports.delete = (req: Request, res: Response) =>{
+exports.delete = (req: Request, res: Response) => {
 	Card.delete(req.params.cardId, (err: any, data: any) => {
 		if (err) {
 			if (err.kind === "not_found") {
@@ -69,10 +69,8 @@ exports.delete = (req: Request, res: Response) =>{
 			}
 		} else res.send(data);
 	});
-}
+};
 
-exports.deposit = () =>{
+exports.deposit = () => {
 	//
-}
-
-
+};

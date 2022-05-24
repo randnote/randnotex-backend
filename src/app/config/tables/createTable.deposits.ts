@@ -4,4 +4,4 @@ export let createDepositsTable: string = `create table if not exists deposits(
     card_id int not null,
     amount decimal(10,2) not null,
     timestamp DATETIME not null
-)`
+)`;

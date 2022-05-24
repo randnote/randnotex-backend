@@ -17,5 +17,4 @@ export let createTransactionWebsite: string = `create table if not exists transa
     notes decimal(10,8) not null,
     timestamp DATETIME not null
 
-)`
-
+)`;

@@ -4,14 +4,14 @@ const sql = require("./db");
 export default class TransactionWebsite {
 	private user_id: string;
 	private ordertype: string;
-    private price: number;
+	private price: number;
 	private amount: number;
 	private notes: number;
 
 	constructor(transactionWebsite: any) {
 		this.user_id = transactionWebsite.user_id;
 		this.ordertype = transactionWebsite.type;
-        this.price = transactionWebsite.price
+		this.price = transactionWebsite.price;
 		this.amount = transactionWebsite.amount;
 		this.notes = transactionWebsite.notes;
 	}
@@ -27,22 +27,28 @@ export default class TransactionWebsite {
 					return;
 				}
 
-				console.log("created transaction: ", { id: res.insertId, ...newtransaction });
+				console.log("created transaction: ", {
+					id: res.insertId,
+					...newtransaction,
+				});
 				result(null, { id: res.insertId, ...newtransaction });
 			}
 		);
 	}
 
 	static getAll(result: any) {
-		sql.query("SELECT * FROM transactionsWebsite", (err: Error, res: Response) => {
-			if (err) {
-				console.log("error: ", err);
-				result(err, null);
-				return;
+		sql.query(
+			"SELECT * FROM transactionsWebsite",
+			(err: Error, res: Response) => {
+				if (err) {
+					console.log("error: ", err);
+					result(err, null);
+					return;
+				}
+				console.log("user: ", res);
+				result(null, res);
 			}
-			console.log("user: ", res);
-			result(null, res);
-		});
+		);
 	}
 
 	// static findById(user_id: any, result: any) {
@@ -64,8 +70,4 @@ export default class TransactionWebsite {
 	// 		}
 	// 	);
 	// }
-
-
 } // end of the class
-
-

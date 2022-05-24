@@ -1,8 +1,12 @@
 import { Application, Request, Response, NextFunction } from "express";
-import User,{depositType, userType} from "../models/users.model";
+import User, {
+	depositType,
+	userType,
+	addressesType,
+} from "../models/users.model";
+import generateKeys, { KeysType } from "../keys/generateKeys";
 
-
-exports.create = (req: Request, res: Response) => {
+exports.create = async (req: Request, res: Response) => {
 	// Validate request
 	if (!req.body) {
 		res.status(400).send({
@@ -19,16 +23,51 @@ exports.create = (req: Request, res: Response) => {
 		verifiedEmail: req.body.verifiedEmail,
 	});
 
-	console.log("body is ", req.body);
+	let { privateKey, publicKey } = await generateKeys();
 
-	User.create(user, (err: Error, data: object) => {
+	const userKeys: KeysType = {
+		publicKey: publicKey,
+		privateKey: privateKey,
+	};
+
+	const userAddressObject: addressesType = {
+		user_id: req.body.id,
+		publicAddress: publicKey,
+		privateAddress: privateKey,
+	};
+
+	User.create(user, async (err: Error, data: object) => {
 		if (err)
 			res.status(500).send({
 				message:
 					err.message ||
 					"Some error occurred while creating the User.",
 			});
-		else res.send(data);
+		else {
+			// store their keys now...
+			User.addUserAddresses(
+				userAddressObject,
+				(err: Error, data: any) => {
+					//
+					if (err) {
+						console.log(err);
+						res.status(500).send({
+							message:
+								err.message ||
+								"Error while inserting addresses to the database.",
+						});
+					} else {
+						// i wanna send this . but, i realize that i need to send back the user and not this stuff...
+						// so, skip this and send the user object with the next res.send()
+						// res.send({
+						// 	success: true,
+						// 	data: data
+						// })
+					}
+				}
+			);
+			res.send(data);
+		}
 	});
 };
 
@@ -61,7 +100,7 @@ exports.findOne = (req: any, res: any) => {
 	});
 };
 
-exports.findAutoGens = (req: any, res: any) =>{
+exports.findAutoGens = (req: any, res: any) => {
 	User.findAutoGens((err: any, data: any): any => {
 		if (err)
 			res.status(500).send({
@@ -71,7 +110,7 @@ exports.findAutoGens = (req: any, res: any) =>{
 			});
 		else res.send(data);
 	});
-}
+};
 
 exports.signin = (req: Request, res: Response) => {
 	if (!req.body) {
@@ -91,15 +130,15 @@ exports.signin = (req: Request, res: Response) => {
 				success: false,
 				message: /*err.message ||*/ "wrong username or password",
 			});
-			else res.send({
+		else
+			res.send({
 				success: true,
-				data: data
+				data: data,
 			});
-		
 	});
 };
 
-exports.signup = (req: Request, res: Response) =>{
+exports.signup = (req: Request, res: Response) => {
 	// Validate request
 	if (!req.body) {
 		res.status(400).send({
@@ -118,7 +157,6 @@ exports.signup = (req: Request, res: Response) =>{
 
 	// do some validation here... check if the user email already exits in the Db OR not?
 
-
 	User.create(user, (err: Error, data: object) => {
 		if (err)
 			res.status(500).send({
@@ -126,14 +164,16 @@ exports.signup = (req: Request, res: Response) =>{
 					err.message ||
 					"Some error occurred while creating the User.",
 			});
-		else res.send({
-			success: true,
-			data: data
-		});
+		else
+			res.send({
+				success: true,
+				data: data,
+			});
 	});
-}
+};
 
-exports.deposit = (req: Request, res: Response) =>{	//
+exports.deposit = (req: Request, res: Response) => {
+	//
 	// Validate request
 	if (!req.body) {
 		res.status(400).send({
@@ -145,36 +185,37 @@ exports.deposit = (req: Request, res: Response) =>{	//
 	const depositObject: depositType = {
 		user_id: req.body.userId,
 		card_id: req.body.cardId,
-		amount: req.body.amount
+		amount: req.body.amount,
 	};
 
-	User.deposit(depositObject, (err: any, data: any)=>{
-		if(err){
+	User.deposit(depositObject, (err: any, data: any) => {
+		if (err) {
 			res.status(500).send({
-				message: err.message || "An error has occured"				
-			})
-		}else{
+				message: err.message || "An error has occured",
+			});
+		} else {
 			res.status(200).send({
 				status: 200,
-				message: `Deposit of ${req.body.amount} has been inserted successfully`
-			})
+				message: `Deposit of ${req.body.amount} has been inserted successfully`,
+			});
 		}
-	})
-	
-}
+	});
+};
 
-exports.zarbalance =  (req: Request, res: Response) =>{
+exports.zarbalance = (req: Request, res: Response) => {
 	//
-	User.zarbalance(req.params.userId, (err: any, data: number)=>{
-		if(err){
+	User.zarbalance(req.params.userId, (err: any, data: number) => {
+		if (err) {
 			res.status(500).send({
-				message: err.message || "An error occured while retrieving the balance."				
-			})
-		}else{
+				message:
+					err.message ||
+					"An error occured while retrieving the balance.",
+			});
+		} else {
 			res.send(200).send({
 				data: data,
-				message: `userId : ${req.params.userId} has the balance of ${data}`
-			})
+				message: `userId : ${req.params.userId} has the balance of ${data}`,
+			});
 		}
-	})
-}
+	});
+};

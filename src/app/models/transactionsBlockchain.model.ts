@@ -9,12 +9,12 @@ export default class TransactionBlockchain {
 
 	constructor(transactionBlockchain: any) {
 		this.user_id = transactionBlockchain.user_id;
-		this.fromAddress= transactionBlockchain.fromAddress;
-		this.toAddress= transactionBlockchain.toAddress;
+		this.fromAddress = transactionBlockchain.fromAddress;
+		this.toAddress = transactionBlockchain.toAddress;
 		this.notes = transactionBlockchain.notes;
 	}
 
-    static create(newtransaction: any, result: any) {
+	static create(newtransaction: any, result: any) {
 		sql.query(
 			"INSERT INTO transactionsBlockchain SET ?",
 			newtransaction,
@@ -24,22 +24,28 @@ export default class TransactionBlockchain {
 					result(err, null);
 					return;
 				}
-				console.log("created transaction: ", { id: res.insertId, ...newtransaction });
+				console.log("created transaction: ", {
+					id: res.insertId,
+					...newtransaction,
+				});
 				result(null, { id: res.insertId, ...newtransaction });
 			}
 		);
 	}
 
 	static getAll(result: any) {
-		sql.query("SELECT * FROM transactionsBlockchain", (err: Error, res: Response) => {
-			if (err) {
-				console.log("error: ", err);
-				result(err, null);
-				return;
+		sql.query(
+			"SELECT * FROM transactionsBlockchain",
+			(err: Error, res: Response) => {
+				if (err) {
+					console.log("error: ", err);
+					result(err, null);
+					return;
+				}
+				console.log("user: ", res);
+				result(null, res);
 			}
-			console.log("user: ", res);
-			result(null, res);
-		});
+		);
 	}
 
 	static findAllById(user_id: any, result: any) {
@@ -62,6 +68,4 @@ export default class TransactionBlockchain {
 			}
 		);
 	}
-
-
 } // end of the class

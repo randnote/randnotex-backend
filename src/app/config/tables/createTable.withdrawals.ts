@@ -5,4 +5,4 @@ export let createWithdrawalsTable: string = `create table if not exists withdraw
     amount decimal(10,2) not null,
     timestamp DATETIME not null
 
-)`
+)`;

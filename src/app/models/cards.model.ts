@@ -59,29 +59,30 @@ export default class Card {
 				}
 
 				console.log(`Deleted a card with the ID ${cardId}`);
-				result(null, {success: true, message: "Card has been deleted sucessfully" });
+				result(null, {
+					success: true,
+					message: "Card has been deleted sucessfully",
+				});
 			}
 		);
 	}
-	
+
 	// get all cards for a particular user:
-	static getAllUser(userId: any, result:any){
+	static getAllUser(userId: any, result: any) {
 		sql.query(
 			`SELECT * FROM cards WHERE user_id = ${userId};`,
 			(err: Error, res: any) => {
-				
-
-				if(res.length < 1){
+				if (res.length < 1) {
 					result(null, {
 						success: false,
-						msg: "user owns no cards"
-					})
+						msg: "user owns no cards",
+					});
 					return;
-				}else if (res.length) {
+				} else if (res.length) {
 					console.log("found cards: ", res);
 					result(null, res);
 					return;
-				}else if (err) {
+				} else if (err) {
 					console.log("error: ", err);
 					result(err, null);
 					return;
@@ -91,6 +92,4 @@ export default class Card {
 			}
 		);
 	}
-
-	
 } // end of the class

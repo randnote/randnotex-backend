@@ -10,12 +10,12 @@ const http = require("http");
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 var allowedOrigins = [
-	"http://localhost:3000", 
+	"http://localhost:3000",
 	"http://locahost:3000/admin",
 	"http://localhost:3000/signup",
 	"http://localhost:3000/signin",
 	"http://localhost:3000/dashboard",
-	"http://localhost:3000/deposit"
+	"http://localhost:3000/deposit",
 ];
 app.use(
 	cors({
@@ -42,30 +42,28 @@ let interval;
 const server = http.createServer(app);
 const io = require("socket.io")(server, {
 	cors: {
-	  origin: ["http://localhost:3000", "http://localhost:3000/chart"],
-	  methods: ["GET", "POST"]
-	}
-  });
-
-
+		origin: ["http://localhost:3000", "http://localhost:3000/chart"],
+		methods: ["GET", "POST"],
+	},
+});
 
 io.on("connection", (socket: any) => {
 	console.log("New client connected");
 	if (interval) {
-	  clearInterval(interval);
+		clearInterval(interval);
 	}
 	interval = setInterval(() => getApiAndEmit(socket), 3000);
 	socket.on("disconnect", () => {
-	  console.log("Client disconnected");
-	  clearInterval(interval);
+		console.log("Client disconnected");
+		clearInterval(interval);
 	});
-  });
+});
 
-  const getApiAndEmit = async (socket: any) => {
+const getApiAndEmit = async (socket: any) => {
 	// const response = new Date();
 	const response = await calculatePrice();
-	let time: Date = new Date()
-	
+	let time: Date = new Date();
+
 	// Emitting a new message. Will be consumed by the client
 	socket.emit("FromAPI", {
 		price: response,
@@ -75,10 +73,10 @@ io.on("connection", (socket: any) => {
 			day: time.getDay(),
 			hours: time.getHours(),
 			minutes: time.getMinutes(),
-			seconds: time.getSeconds()
-		}
+			seconds: time.getSeconds(),
+		},
 	});
-  };
+};
 
 require("./app/config/createTables");
 require("./app/routes/index.routers")(app);

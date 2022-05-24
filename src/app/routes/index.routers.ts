@@ -3,7 +3,7 @@ import { Application } from "express";
 module.exports = (app: Application) => {
 	const User = require("../controllers/users.controller");
 	const TransactionsBlockchain = require("../controllers/transactionsBlockchain.controller");
-	const TransactionsWebsite = require("../controllers/transactionsWebsite.controller")
+	const TransactionsWebsite = require("../controllers/transactionsWebsite.controller");
 	const Card = require("../controllers/cards.controller");
 
 	// users
@@ -15,22 +15,27 @@ module.exports = (app: Application) => {
 	app.get("/zarbalance/:userId", User.zarbalance); // get zar balance
 	app.post("/deposit", User.deposit); // create deposit
 
-
 	// get users that are auto generated... (meaning, that have the email address : johnDoe@randnotex.com)
-	app.get("/userfindAutoGens", User.findAutoGens)
+	app.get("/userfindAutoGens", User.findAutoGens);
 
 	// transactionBlockchain
 	app.post("/transactionBlockchain", TransactionsBlockchain.create); // make a transaction
 	app.get("/transactionBlockchain", TransactionsBlockchain.BlockchainfindAll); // get all transactions to blockchain
-	app.get("/transactionBlockchain/:userId", TransactionsBlockchain.BlockchainfindAllUser); // get all transactions per user
+	app.get(
+		"/transactionBlockchain/:userId",
+		TransactionsBlockchain.BlockchainfindAllUser
+	); // get all transactions per user
 
 	// transactionWebsite
 	app.post("/transactionWebsite", TransactionsWebsite.create); // make a transaction
-	app.get("/transactionWebsite/:userId", TransactionsWebsite.WebsitefindAllUser); // get all transactions per user
+	app.get(
+		"/transactionWebsite/:userId",
+		TransactionsWebsite.WebsitefindAllUser
+	); // get all transactions per user
 
 	// cards
 	app.post("/card", Card.create); // add a card
-	
-	app.get("/deletecard/:cardId", Card.delete);  // is delete the right name??
+
+	app.get("/deletecard/:cardId", Card.delete); // is delete the right name??
 	app.get("/cards/:userId", Card.findAllUser); // get a card per user
 };

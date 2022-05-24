@@ -1,5 +1,5 @@
 import { Application, Request, Response, NextFunction } from "express";
-import TransactionWebsite from '../models/transactionsWebsite.model'
+import TransactionWebsite from "../models/transactionsWebsite.model";
 
 // Create transactionWebsite:
 exports.create = (req: Request, res: Response) => {
@@ -13,10 +13,10 @@ exports.create = (req: Request, res: Response) => {
 	const transaction = new TransactionWebsite({
 		user_id: req.body.user_id,
 		type: req.body.type,
-        price: req.body.price,
+		price: req.body.price,
 		amount: req.body.amount,
 		ordertype: req.body.ordertype,
-		notes :req.body.notes
+		notes: req.body.notes,
 	});
 
 	TransactionWebsite.create(transaction, (err: Error, data: object) => {
@@ -32,6 +32,4 @@ exports.create = (req: Request, res: Response) => {
 
 // Get all the transactionsWebsite for a single user:
 
-exports.WebsitefindAllUser = () =>{
-
-}
+exports.WebsitefindAllUser = () => {};
