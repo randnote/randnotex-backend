@@ -14,7 +14,8 @@ var allowedOrigins = [
 	"http://locahost:3000/admin",
 	"http://localhost:3000/signup",
 	"http://localhost:3000/signin",
-	"http://localhost:3000/dashboard"
+	"http://localhost:3000/dashboard",
+	"http://localhost:3000/deposit"
 ];
 app.use(
 	cors({
@@ -63,10 +64,20 @@ io.on("connection", (socket: any) => {
   const getApiAndEmit = async (socket: any) => {
 	// const response = new Date();
 	const response = await calculatePrice();
-	// console.log(response)
-	console.log({price: response})
+	let time: Date = new Date()
+	
 	// Emitting a new message. Will be consumed by the client
-	socket.emit("FromAPI", response);
+	socket.emit("FromAPI", {
+		price: response,
+		time: {
+			year: time.getFullYear(),
+			month: time.getMonth(),
+			day: time.getDay(),
+			hours: time.getHours(),
+			minutes: time.getMinutes(),
+			seconds: time.getSeconds()
+		}
+	});
   };
 
 require("./app/config/createTables");

@@ -58,8 +58,8 @@ export default class Card {
 					return;
 				}
 
-				console.log("Deleted card: ", { id: res.insertId, ...cardId });
-				result(null, { id: res.insertId, ...cardId });
+				console.log(`Deleted a card with the ID ${cardId}`);
+				result(null, {success: true, message: "Card has been deleted sucessfully" });
 			}
 		);
 	}
@@ -69,15 +69,21 @@ export default class Card {
 		sql.query(
 			`SELECT * FROM cards WHERE user_id = ${userId};`,
 			(err: Error, res: any) => {
-				if (err) {
-					console.log("error: ", err);
-					result(err, null);
-					return;
-				}
+				
 
-				if (res.length) {
+				if(res.length < 1){
+					result(null, {
+						success: false,
+						msg: "user owns no cards"
+					})
+					return;
+				}else if (res.length) {
 					console.log("found cards: ", res);
 					result(null, res);
+					return;
+				}else if (err) {
+					console.log("error: ", err);
+					result(err, null);
 					return;
 				}
 				// havent found a user:

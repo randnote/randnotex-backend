@@ -1,5 +1,6 @@
 import { Application, Request, Response, NextFunction } from "express";
-import User from "../models/users.model";
+import User,{depositType, userType} from "../models/users.model";
+
 
 exports.create = (req: Request, res: Response) => {
 	// Validate request
@@ -141,50 +142,25 @@ exports.deposit = (req: Request, res: Response) =>{	//
 		console.log("empty");
 	}
 
-	const information = {
-		userId: req.body.id,
+	const depositObject: depositType = {
+		user_id: req.body.userId,
+		card_id: req.body.cardId,
 		amount: req.body.amount
 	};
 
-	console.log(req.body.id)
-	//call and get users current balance and make calculation:
-	//User.
-	// User.findById(req.body.id, (err: any, data: any) => {
-	// 	if (err) {
-	// 		if (err.kind === "not_found") {
-	// 			res.status(404).send({
-	// 				message: `Not found User with id ${req.params.userId}.`,
-	// 			});
-	// 		} else {
-	// 			res.status(500).send({
-	// 				message:
-	// 					"Error retrieving User with id " + req.params.userId,
-	// 			});
-	// 		}
-	// 	} else {
-	// 		//res.send(data)
-	// 		// found the user, now get their balance...
-	// 		console.log(data)
-	// 		let usersCurrentBalance: number = data.balance;
-	// 		let newBalance: number = usersCurrentBalance+ req.body.amount;
-
-	// 		console.log(req.body.amount)
-	// 	}
-	// });
-// }
-
-	// User.create(user, (err: Error, data: object) => {
-	// 	if (err)
-	// 		res.status(500).send({
-	// 			message:
-	// 				err.message ||
-	// 				"Some error occurred while creating the User.",
-	// 		});
-	// 	else res.send({
-	// 		success: true,
-	// 		data: data
-	// 	});
-	// });
+	User.deposit(depositObject, (err: any, data: any)=>{
+		if(err){
+			res.status(500).send({
+				message: err.message || "An error has occured"				
+			})
+		}else{
+			res.status(200).send({
+				status: 200,
+				message: `Deposit of ${req.body.amount} has been inserted successfully`
+			})
+		}
+	})
+	
 }
 
 exports.zarbalance = (req: Request, res: Response) =>{

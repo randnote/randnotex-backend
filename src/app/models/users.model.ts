@@ -1,12 +1,18 @@
 import express, { Application, Request, Response, NextFunction } from "express";
 const sql = require("./db");
 
-interface userType {
+export interface userType {
 	firstname: string;
 	lastname: string;
 	email: string;
 	verifiedEmail: boolean;
 	password: string;
+}
+
+export interface depositType {
+	user_id: number;
+	card_id: number;
+	amount: number;
 }
 
 // constructor
@@ -43,23 +49,7 @@ export default class User {
 		);
 	}
 
-	// takes and object- properties being the properties and the amount
-	// static createTransaction(obj:any, result){
-	// 	sql.query(
-	// 		// "INSERT INTO users SET ?",
-	// 		// newuser,
-	// 		// (err: Error, res: any) => {
-	// 		// 	if (err) {
-	// 		// 		console.log("error: ", err);
-	// 		// 		result(err, null);
-	// 		// 		return;
-	// 		// 	}
-
-	// 		// 	console.log("created user: ", { id: res.insertId, ...newuser });
-	// 		// 	result(null, { id: res.insertId, ...newuser });
-	// 		// }
-	// 	)
-	// }
+	
 
 	// get all method:
 	static getAll(result: any) {
@@ -134,6 +124,23 @@ export default class User {
 						success: false
 					}, null);
 				}
+			}
+		);
+	}
+
+	static deposit = (obj: depositType, result: any) =>{
+		sql.query(
+			"INSERT INTO deposits SET ?",
+			obj,
+			(err: Error, res: any) => {
+				if (err) {
+					console.log("error: ", err);
+					result(err, null);
+					return;
+				}
+
+				console.log("created deposit: ", { id: res.insertId, ...obj });
+				result(null, { id: res.insertId, ...obj });
 			}
 		);
 	}

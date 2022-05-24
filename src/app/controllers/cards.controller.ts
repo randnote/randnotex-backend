@@ -34,13 +34,23 @@ exports.create = (req: Request, res: Response) => {
 // get all cards per user
 exports.findAllUser = (req:Request, res: Response) =>{
 	Card.getAllUser(req.params.userId, (err: any, data: any): any => {
-		if (err)
+		if (err){
 			res.status(500).send({
 				message:
 					err.message ||
 					"Some error occurred while retrieving Users.",
 			});
-		else res.send(data);
+		}
+		// else {res.status(200).send({
+		// 	success: 200,
+		// 	res: res
+		// }));
+		else{
+			res.status(200).send({
+				success: true,
+				result: data
+			})
+		}
 	});
 }
 
