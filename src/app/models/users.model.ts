@@ -3,6 +3,7 @@ const sql = require("./db");
 import { KeysType } from "../keys/generateKeys";
 
 export interface userType {
+	id?: number;
 	firstname: string;
 	lastname: string;
 	email: string;
@@ -17,7 +18,7 @@ export interface depositType {
 }
 
 export interface addressesType {
-	user_id: number;
+	user_id: number | undefined;
 	publicAddress: string;
 	privateAddress: string;
 }

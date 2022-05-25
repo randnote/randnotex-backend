@@ -23,19 +23,6 @@ exports.create = async (req: Request, res: Response) => {
 		verifiedEmail: req.body.verifiedEmail,
 	});
 
-	let { privateKey, publicKey } = await generateKeys();
-
-	const userKeys: KeysType = {
-		publicKey: publicKey,
-		privateKey: privateKey,
-	};
-
-	const userAddressObject: addressesType = {
-		user_id: req.body.id,
-		publicAddress: publicKey,
-		privateAddress: privateKey,
-	};
-
 	User.create(user, async (err: Error, data: object) => {
 		if (err) {
 			res.status(500).send({
@@ -43,26 +30,8 @@ exports.create = async (req: Request, res: Response) => {
 					err.message ||
 					"Some error occurred while creating the User.",
 			});
-		} else {
-			// store their keys now...
-			User.addUserAddresses(
-				userAddressObject,
-				(err: Error, data: any) => {
-					//
-					if (err) {
-						console.log(err);
-						res.status(500).send({
-							message:
-								err.message ||
-								"Error while inserting addresses to the database.",
-						});
-					} else {
-						console.log("seemingly ran without error");
-					}
-				}
-			);
-			res.send(data);
 		}
+		res.send(data);
 	});
 };
 
@@ -133,7 +102,7 @@ exports.signin = (req: Request, res: Response) => {
 	});
 };
 
-exports.signup = (req: Request, res: Response) => {
+exports.signup = async (req: Request, res: Response) => {
 	// Validate request
 	if (!req.body) {
 		res.status(400).send({
@@ -150,25 +119,52 @@ exports.signup = (req: Request, res: Response) => {
 		verifiedEmail: false,
 	});
 
-	// do some validation here... check if the user email already exits in the Db OR not?
+	let { privateKey, publicKey } = await generateKeys();
 
-	User.create(user, (err: Error, data: object) => {
+	const userKeys: KeysType = {
+		publicKey: publicKey,
+		privateKey: privateKey,
+	};
+
+	User.create(user, (err: Error, data: userType) => {
 		if (err)
 			res.status(500).send({
 				message:
 					err.message ||
 					"Some error occurred while creating the User.",
 			});
-		else
+		else {
+			const userAddressObject: addressesType = {
+				user_id: data.id,
+				publicAddress: publicKey,
+				privateAddress: privateKey,
+			};
+
+			// store their keys now...
+			User.addUserAddresses(
+				userAddressObject,
+				(err: Error, data: any) => {
+					if (err) {
+						console.log(err);
+						res.status(500).send({
+							message:
+								err.message ||
+								"Error while inserting addresses to the database.",
+						});
+					}
+					console.log("seemingly ran without error");
+				}
+			);
+
 			res.send({
 				success: true,
 				data: data,
 			});
+		}
 	});
 };
 
 exports.deposit = (req: Request, res: Response) => {
-	//
 	// Validate request
 	if (!req.body) {
 		res.status(400).send({
