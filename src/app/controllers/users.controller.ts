@@ -5,8 +5,7 @@ import User, {
 	addressesType,
 } from "../models/users.model";
 import generateKeys, { KeysType } from "../keys/generateKeys";
-import updateBalance from '../updateBalance'
-
+import updateBalance from "../updateBalance";
 
 exports.create = async (req: Request, res: Response) => {
 	// Validate request
@@ -61,7 +60,6 @@ exports.create = async (req: Request, res: Response) => {
 					console.log("seemingly ran without error");
 				}
 			);
-
 
 			res.send({
 				success: true,
@@ -197,13 +195,12 @@ exports.deposit = (req: Request, res: Response) => {
 		console.log("empty");
 	}
 
-	let date: string = new Date().toISOString().slice(0, 19).replace('T', ' ');
+	let date: string = new Date().toISOString().slice(0, 19).replace("T", " ");
 	const depositObject: depositType = {
 		user_id: req.body.userId,
 		card_id: req.body.cardId,
 		amount: req.body.amount,
-		timestamp: date
-
+		timestamp: date,
 	};
 
 	User.deposit(depositObject, (err: any, data: any) => {
@@ -213,12 +210,13 @@ exports.deposit = (req: Request, res: Response) => {
 			});
 		} else {
 			// call update balance here...
-			updateBalance(req.body.userId, "deposit", req.body.amount)
-
+			
 			res.status(200).send({
 				status: 200,
 				message: `Deposit of ${req.body.amount} has been inserted successfully`,
 			});
+
+			updateBalance(req.body.userId, "deposit", req.body.amount);
 		}
 	});
 };
