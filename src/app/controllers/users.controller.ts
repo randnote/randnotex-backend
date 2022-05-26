@@ -210,7 +210,7 @@ exports.deposit = (req: Request, res: Response) => {
 			});
 		} else {
 			// call update balance here...
-			
+
 			res.status(200).send({
 				status: 200,
 				message: `Deposit of ${req.body.amount} has been inserted successfully`,
@@ -223,18 +223,19 @@ exports.deposit = (req: Request, res: Response) => {
 
 exports.zarbalance = (req: Request, res: Response) => {
 	//
-	// User.zarbalance(req.params.userId, (err: any, data: number) => {
-	// 	if (err) {
-	// 		res.status(500).send({
-	// 			message:
-	// 				err.message ||
-	// 				"An error occured while retrieving the balance.",
-	// 		});
-	// 	} else {
-	// 		res.send(200).send({
-	// 			data: data,
-	// 			message: `userId : ${req.params.userId} has the balance of ${data}`,
-	// 		});
-	// 	}
-	// });
+	User.zarbalance(req.params.userId, (err: any, data: number) => {
+		if (err) {
+			res.status(500).send({
+				message:
+					err.message ||
+					"An error occured while retrieving the balance.",
+			});
+		} else {
+			res.status(200).send({
+				success: true,
+				balance: data,
+				message: `userId : ${req.params.userId} has the balance of ${data}`,
+			});
+		}
+	});
 };

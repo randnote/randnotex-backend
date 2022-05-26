@@ -190,7 +190,7 @@ export default class User {
 			}
 			existingBalance = data;
 			newBalance = updateObject.amount + existingBalance;
-			console.log(newBalance)
+			console.log(newBalance);
 			sql.query(
 				`UPDATE users SET balance = '${newBalance}' WHERE id='${updateObject.userId}' `,
 				(err: Error, res: any) => {
@@ -210,7 +210,7 @@ export default class User {
 		// first get the existing balance and reduce it.
 	};
 
-	static zarbalance = (userId: number | number, result: any) => {
+	static zarbalance = (userId: number | string, result: any) => {
 		sql.query(
 			`SELECT balance FROM users WHERE id = ${userId}`,
 			(err: Error, res: Response) => {
@@ -219,7 +219,6 @@ export default class User {
 					result(err, null);
 					return;
 				}
-				// console.log("zarbalance ..: ", res);
 				result(null, res[0].balance);
 			}
 		);
