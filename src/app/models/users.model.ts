@@ -15,12 +15,19 @@ export interface depositType {
 	user_id: number;
 	card_id: number;
 	amount: number;
+	timestamp: Date| string;
 }
 
 export interface addressesType {
 	user_id: number | undefined;
 	publicAddress: string;
 	privateAddress: string;
+}
+
+export interface updateBalanceType{
+	userId: number,
+	type: string,
+	amount: number
 }
 
 // constructor
@@ -173,16 +180,48 @@ export default class User {
 		});
 	};
 
-	static zarbalance = (userId: number | string, result: any) => {
-		// sql.query(`SELECT balance FROM deposits WHERE user_id = ${userId}`, (err: Error, res: Response) => {
-		// 	if (err) {
-		// 		console.log("error: ", err);
-		// 		result(err, null);
-		// 		return;
-		// 	}
-		// 	console.log("zarbalance ..: ", res);
-		// 	result(null, res);
-		// });
-		console.log("zar balance work	");
+	static addBalance = async(updateObject: updateBalanceType) =>{
+		// first get the existing balance... and add to it.
+		let existingBalance : number ;
+		let newBalance : number;
+		this.zarbalance(updateObject.userId, (err: Error, data: number)=>{
+			if(err){
+				console.log(err)
+			}
+			existingBalance = data;
+			newBalance = updateObject.amount+ existingBalance;
+
+			sql.query(`UPDATE users SET balance = '${newBalance}' WHERE id='${updateObject.userId}' `, (err: Error, res: any) => {
+				if (err) {
+					console.log("error: ", err);
+					//result(err, null);
+					return;
+				}
+
+				console.log(res)
+			}); // end of query
+
+		}); // end of addBalance func
+
+		
+	}
+
+	static reduceBalance = (updateObject: updateBalanceType) =>{
+
+		// first get the existing balance and reduce it.
+
+	}
+
+	static zarbalance = (userId: number| number, result: any) => {
+		sql.query(`SELECT balance FROM users WHERE id = ${userId}`, (err: Error, res: Response) => {
+			if (err) {
+				console.log("error: ", err);
+				result(err, null);
+				return;
+			}
+			// console.log("zarbalance ..: ", res);
+			result(null, res[0].balance);
+			
+		});
 	};
 } // end of the class:

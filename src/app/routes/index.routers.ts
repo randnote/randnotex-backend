@@ -10,7 +10,7 @@ module.exports = (app: Application) => {
 	app.post("/signin", User.signin);
 	app.post("/signup", User.signup);
 	app.post("/usercreate", User.create);
-	app.get("/userfindall", User.findAll);
+	// app.get("/userfindall", User.findAll); // not impolemented
 	app.get("/user/:userId", User.findOne);
 	app.get("/zarbalance/:userId", User.zarbalance); // get zar balance
 	app.post("/deposit", User.deposit); // create deposit

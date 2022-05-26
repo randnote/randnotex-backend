@@ -5,6 +5,8 @@ import User, {
 	addressesType,
 } from "../models/users.model";
 import generateKeys, { KeysType } from "../keys/generateKeys";
+import updateBalance from '../updateBalance'
+
 
 exports.create = async (req: Request, res: Response) => {
 	// Validate request
@@ -18,32 +20,54 @@ exports.create = async (req: Request, res: Response) => {
 	const user = new User({
 		firstname: req.body.firstname,
 		lastname: req.body.lastname,
-		email: req.body.staffnumber,
+		email: req.body.email,
 		password: req.body.password,
-		verifiedEmail: req.body.verifiedEmail,
+		verifiedEmail: false,
 	});
 
-	User.create(user, async (err: Error, data: object) => {
-		if (err) {
+	let { privateKey, publicKey } = await generateKeys();
+
+	const userKeys: KeysType = {
+		publicKey: publicKey,
+		privateKey: privateKey,
+	};
+
+	User.create(user, (err: Error, data: userType) => {
+		if (err)
 			res.status(500).send({
 				message:
 					err.message ||
 					"Some error occurred while creating the User.",
 			});
-		}
-		res.send(data);
-	});
-};
+		else {
+			const userAddressObject: addressesType = {
+				user_id: data.id,
+				publicAddress: publicKey,
+				privateAddress: privateKey,
+			};
 
-exports.findAll = (req: Request, res: Response) => {
-	User.getAll((err: any, data: any): any => {
-		if (err)
-			res.status(500).send({
-				message:
-					err.message ||
-					"Some error occurred while retrieving Users.",
+			// store their keys now...
+			User.addUserAddresses(
+				userAddressObject,
+				(err: Error, data: any) => {
+					if (err) {
+						console.log(err);
+						res.status(500).send({
+							message:
+								err.message ||
+								"Error while inserting addresses to the database.",
+						});
+					}
+					console.log("seemingly ran without error");
+				}
+			);
+
+
+			res.send({
+				success: true,
+				data: data,
 			});
-		else res.send(data);
+		}
 	});
 };
 
@@ -173,10 +197,13 @@ exports.deposit = (req: Request, res: Response) => {
 		console.log("empty");
 	}
 
+	let date: string = new Date().toISOString().slice(0, 19).replace('T', ' ');
 	const depositObject: depositType = {
 		user_id: req.body.userId,
 		card_id: req.body.cardId,
 		amount: req.body.amount,
+		timestamp: date
+
 	};
 
 	User.deposit(depositObject, (err: any, data: any) => {
@@ -185,6 +212,9 @@ exports.deposit = (req: Request, res: Response) => {
 				message: err.message || "An error has occured",
 			});
 		} else {
+			// call update balance here...
+			updateBalance(req.body.userId, "deposit", req.body.amount)
+
 			res.status(200).send({
 				status: 200,
 				message: `Deposit of ${req.body.amount} has been inserted successfully`,
@@ -195,18 +225,18 @@ exports.deposit = (req: Request, res: Response) => {
 
 exports.zarbalance = (req: Request, res: Response) => {
 	//
-	User.zarbalance(req.params.userId, (err: any, data: number) => {
-		if (err) {
-			res.status(500).send({
-				message:
-					err.message ||
-					"An error occured while retrieving the balance.",
-			});
-		} else {
-			res.send(200).send({
-				data: data,
-				message: `userId : ${req.params.userId} has the balance of ${data}`,
-			});
-		}
-	});
+	// User.zarbalance(req.params.userId, (err: any, data: number) => {
+	// 	if (err) {
+	// 		res.status(500).send({
+	// 			message:
+	// 				err.message ||
+	// 				"An error occured while retrieving the balance.",
+	// 		});
+	// 	} else {
+	// 		res.send(200).send({
+	// 			data: data,
+	// 			message: `userId : ${req.params.userId} has the balance of ${data}`,
+	// 		});
+	// 	}
+	// });
 };
