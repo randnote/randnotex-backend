@@ -3,17 +3,19 @@ const sql = require("./db");
 
 export default class TransactionWebsite {
 	private user_id: string;
-	private ordertype: string;
+	private ordertype: any;
 	private price: number;
 	private amount: number;
 	private notes: number;
+	private timestamp: Date| string;
 
 	constructor(transactionWebsite: any) {
 		this.user_id = transactionWebsite.user_id;
-		this.ordertype = transactionWebsite.type;
+		this.ordertype = transactionWebsite.ordertype;
 		this.price = transactionWebsite.price;
 		this.amount = transactionWebsite.amount;
 		this.notes = transactionWebsite.notes;
+		this.timestamp = transactionWebsite.timestamp
 	}
 
 	static create(newtransaction: any, result: any) {

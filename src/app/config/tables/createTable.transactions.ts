@@ -12,7 +12,7 @@ export let createTransactionWebsite: string = `create table if not exists transa
     id int primary key auto_increment,
     user_id int not null,
     price decimal(10,2) not null,
-    ordertype enum ('buy','sell') not null,  
+    ordertype varchar(100) not null,  
     amount decimal(10,2) not null,
     notes decimal(10,8) not null,
     timestamp DATETIME not null
