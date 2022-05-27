@@ -7,7 +7,7 @@ export default class TransactionWebsite {
 	private price: number;
 	private amount: number;
 	private notes: number;
-	private timestamp: Date| string;
+	private timestamp: Date | string;
 
 	constructor(transactionWebsite: any) {
 		this.user_id = transactionWebsite.user_id;
@@ -15,7 +15,7 @@ export default class TransactionWebsite {
 		this.price = transactionWebsite.price;
 		this.amount = transactionWebsite.amount;
 		this.notes = transactionWebsite.notes;
-		this.timestamp = transactionWebsite.timestamp
+		this.timestamp = transactionWebsite.timestamp;
 	}
 
 	static create(newtransaction: any, result: any) {

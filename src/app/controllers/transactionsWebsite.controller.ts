@@ -11,17 +11,15 @@ exports.create = (req: Request, res: Response) => {
 		console.log("empty");
 	}
 
-
-
 	const transaction = new TransactionWebsite({
 		user_id: req.body.user_id,
 		price: req.body.price,
 		amount: req.body.amount,
 		ordertype: req.body.ordertype,
 		notes: req.body.notes,
-		timestamp: new Date().toISOString().slice(0, 19).replace("T", " ")
+		timestamp: new Date().toISOString().slice(0, 19).replace("T", " "),
 	});
-	
+
 	TransactionWebsite.create(transaction, (err: Error, data: object) => {
 		if (err)
 			res.status(500).send({
