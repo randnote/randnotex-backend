@@ -33,4 +33,26 @@ exports.create = (req: Request, res: Response) => {
 
 // Get all the transactionsWebsite for a single user:
 
-exports.WebsitefindAllUser = () => {};
+exports.WebsitefindAllUser = (req: Request, res: Response) => {
+	
+	
+		TransactionWebsite.findAllTransactionsUser(parseInt(req.params.userId), (err: any, data: any) => {
+			if (err) {
+				if (err.kind === "not_found") {
+					res.status(404).send({
+						message: `Not found User with id ${req.params.userId}.`,
+					});
+				} else {
+					res.status(500).send({
+						message:
+							"Error retrieving User with id " + req.params.userId,
+					});
+				}
+			} else res.status(200).send({
+				success: true,
+				data: data
+			})
+		});
+
+	
+};

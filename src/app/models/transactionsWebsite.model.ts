@@ -53,6 +53,21 @@ export default class TransactionWebsite {
 		);
 	}
 
+	static findAllTransactionsUser(userId: number, result: any){
+		sql.query(
+			`SELECT * FROM transactionsWebsite WHERE user_id= ${userId}`,
+			(err: Error, res: Response) => {
+				if (err) {
+					console.log("error: ", err);
+					result(err, null);
+					return;
+				}
+				console.log("user: ", res);
+				result(null, res);
+			}
+		);
+	}
+
 	// static findById(user_id: any, result: any) {
 	// 	sql.query(
 	// 		`SELECT * FROM transactionsWebsite WHERE id = ${user_id}`,
