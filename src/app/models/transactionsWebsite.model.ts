@@ -53,7 +53,7 @@ export default class TransactionWebsite {
 		);
 	}
 
-	static findAllTransactionsUser(userId: number, result: any){
+	static findAllTransactionsUser(userId: number, result: any) {
 		sql.query(
 			`SELECT * FROM transactionsWebsite WHERE user_id= ${userId}`,
 			(err: Error, res: Response) => {
