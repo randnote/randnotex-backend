@@ -3,7 +3,7 @@ export let createTransactionBlockchain: string = `create table if not exists tra
     user_id int not null,
     fromAddress MEDIUMTEXT not null,
     toAddress MEDIUMTEXT not null,
-    notes decimal(10,8) not null,
+    notes decimal(36,18) not null,
     timestamp DATETIME not null
 
 )`;
