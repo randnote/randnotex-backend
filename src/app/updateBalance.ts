@@ -1,6 +1,8 @@
 import User from "./models/users.model";
 import { updateBalanceType } from "./models/users.model";
 
+/* This file in the switch statments calls addBalance() and reduceBalance() in the User Model */
+
 const updateBalance = (userId: number, type: string, amount: number): void => {
 	let updateObject = {
 		userId: userId,
@@ -10,17 +12,19 @@ const updateBalance = (userId: number, type: string, amount: number): void => {
 	//
 	switch (type) {
 		case "deposit":
-			// call user.updatebalance
 			User.addBalance(updateObject);
 			break;
 		case "withdrawal":
-		//
-		case "buyorder":
-		//
-		case "sellorder":
-		//
-		default:
+			User.reduceBalance(updateObject);
 			break;
+		case "buyorder":
+			User.reduceBalance(updateObject);
+			break;
+		case "sellorder":
+			User.reduceBalance(updateObject);
+			break;
+		// default:
+		// 	break;
 	}
 };
 
