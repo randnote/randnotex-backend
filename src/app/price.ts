@@ -23,14 +23,14 @@ const getSupply = async () => {
 const calculatePrice = async () => {
 	let NEW_SUPPLY: number = await getSupply();
 	if (NEW_SUPPLY === 0) {
-		console.log("caught ya");
+		// console.log("caught ya");
 		NEW_SUPPLY = 100;
 	}
 	// price based off of increased supply:
 	// check if old mySupply is still the same as the new, if not, it means that it increased and so we decrease the price:
 
-	console.log(CURRENT_SUPPLY);
-	console.log(NEW_SUPPLY);
+	// console.log(CURRENT_SUPPLY);
+	// console.log(NEW_SUPPLY);
 	if (CURRENT_SUPPLY !== NEW_SUPPLY) {
 		let s: number = CURRENT_SUPPLY / NEW_SUPPLY;
 		s = s * 100;
