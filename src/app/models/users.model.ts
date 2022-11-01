@@ -212,8 +212,7 @@ export default class User {
 	};
 
 	static reduceBalance = (updateObject: updateBalanceType) => {
-		console.log("reduce balance is called!!!")
-		// first get the existing balance and reduce it.
+		// first get the existing balance... and add to it.
 		let existingBalance: number = 0;
 		let newBalance: number;
 		let updateObjAmount: number;
@@ -223,10 +222,18 @@ export default class User {
 			}
 			existingBalance = data;
 
-			updateObjAmount = parseFloat(updateObject.amount.toFixed(2));
+			// updateObjAmount = parseFloat(updateObject.amount);
+			console.log(updateObject.amount)
+			// console.log("update object amount :"+ typeof(updateObjAmount))
 
-			newBalance = existingBalance - updateObjAmount;
+			newBalance = existingBalance - updateObject.amount;
 			console.log(newBalance);
+
+			console.log("newbalance : "+newBalance);
+			console.log("existingballnce : "+existingBalance);
+			// console.log("newbalance : "+newBalance);
+			console.log("typeof updateobject : "+typeof(updateObject.amount));
+
 
 			sql.query(
 				`UPDATE users SET balance = '${newBalance}' WHERE id='${updateObject.userId}' `,

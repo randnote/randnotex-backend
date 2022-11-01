@@ -25,7 +25,7 @@ export default class TransactionWebsite {
 		sql.query(
 			"INSERT INTO transactionsWebsite SET ?",
 			newtransaction,
-			async(err: Error, res: any) => {
+			async (err: Error, res: any) => {
 				if (err) {
 					console.log("error: ", err);
 					result(err, null);
@@ -37,14 +37,12 @@ export default class TransactionWebsite {
 					...newtransaction,
 				});
 
-				console.log(res)
 				let obj = {
 					id: res.insertId,
-					...newtransaction
-				}
-				await updateBalance(obj.id, obj.ordertype, obj.amount);
+					...newtransaction,
+				};
+				await updateBalance(obj.user_id, obj.ordertype, obj.amount);
 				result(null, { id: res.insertId, ...newtransaction });
-				
 			}
 		);
 	}
