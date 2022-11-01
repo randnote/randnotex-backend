@@ -190,9 +190,7 @@ export default class User {
 				console.log(err);
 			}
 			existingBalance = data;
-
 			updateObjAmount = parseFloat(updateObject.amount.toFixed(2));
-			// console.log("update object amount :"+ typeof(updateObjAmount))
 
 			newBalance = updateObjAmount + existingBalance;
 			console.log(newBalance);
@@ -221,19 +219,8 @@ export default class User {
 				console.log(err);
 			}
 			existingBalance = data;
-
-			// updateObjAmount = parseFloat(updateObject.amount);
-			console.log(updateObject.amount)
-			// console.log("update object amount :"+ typeof(updateObjAmount))
-
 			newBalance = existingBalance - updateObject.amount;
 			console.log(newBalance);
-
-			console.log("newbalance : "+newBalance);
-			console.log("existingballnce : "+existingBalance);
-			// console.log("newbalance : "+newBalance);
-			console.log("typeof updateobject : "+typeof(updateObject.amount));
-
 
 			sql.query(
 				`UPDATE users SET balance = '${newBalance}' WHERE id='${updateObject.userId}' `,
