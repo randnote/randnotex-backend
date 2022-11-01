@@ -212,6 +212,7 @@ export default class User {
 	};
 
 	static reduceBalance = (updateObject: updateBalanceType) => {
+		console.log("reduce balance is called!!!")
 		// first get the existing balance and reduce it.
 		let existingBalance: number = 0;
 		let newBalance: number;

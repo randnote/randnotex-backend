@@ -1,11 +1,14 @@
 import express, { Application, Request, Response, NextFunction } from "express";
 const sql = require("./db");
+import updateBalance from "../updateBalance";
 
+// when i create a transaction, if its a buy, i need to reduce their balance in the database...
+// if its a sell, then i need to increase their balance... hectic.
 export default class TransactionWebsite {
-	private user_id: string;
-	private ordertype: any;
+	public user_id: string;
+	protected ordertype: any; // buy/sell
 	private price: number;
-	private amount: number;
+	protected amount: number;
 	private notes: number;
 	private timestamp: Date | string;
 
@@ -22,7 +25,7 @@ export default class TransactionWebsite {
 		sql.query(
 			"INSERT INTO transactionsWebsite SET ?",
 			newtransaction,
-			(err: Error, res: any) => {
+			async(err: Error, res: any) => {
 				if (err) {
 					console.log("error: ", err);
 					result(err, null);
@@ -33,7 +36,15 @@ export default class TransactionWebsite {
 					id: res.insertId,
 					...newtransaction,
 				});
+
+				console.log(res)
+				let obj = {
+					id: res.insertId,
+					...newtransaction
+				}
+				await updateBalance(obj.id, obj.ordertype, obj.amount);
 				result(null, { id: res.insertId, ...newtransaction });
+				
 			}
 		);
 	}
