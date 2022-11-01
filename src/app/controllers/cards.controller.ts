@@ -18,7 +18,7 @@ exports.create = (req: Request, res: Response) => {
 		cvc: req.body.cvc,
 	});
 
-	console.log("body is ", req.body);
+	// console.log("body is ", req.body);
 
 	Card.create(card, (err: Error, data: object) => {
 		if (err)

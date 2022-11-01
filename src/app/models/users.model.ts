@@ -182,15 +182,21 @@ export default class User {
 
 	static addBalance = async (updateObject: updateBalanceType) => {
 		// first get the existing balance... and add to it.
-		let existingBalance: number;
-		let newBalance: number;
+		let existingBalance: number =0;
+		let newBalance: number ;
+		let updateObjAmount: number;
 		this.zarbalance(updateObject.userId, (err: Error, data: number) => {
 			if (err) {
 				console.log(err);
 			}
 			existingBalance = data;
-			newBalance = updateObject.amount + existingBalance;
+			
+			updateObjAmount = parseFloat((updateObject.amount).toFixed(2));
+			// console.log("update object amount :"+ typeof(updateObjAmount))
+
+			newBalance = updateObjAmount + existingBalance;
 			console.log(newBalance);
+
 			sql.query(
 				`UPDATE users SET balance = '${newBalance}' WHERE id='${updateObject.userId}' `,
 				(err: Error, res: any) => {
