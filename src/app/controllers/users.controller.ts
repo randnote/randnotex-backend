@@ -215,9 +215,12 @@ exports.deposit = (req: Request, res: Response) => {
 				status: 200,
 				message: `Deposit of ${req.body.amount} has been inserted successfully`,
 			});
-			console.log("the deposit is:"+ req.body.amount)
-			updateBalance(req.body.userId, "deposit", parseFloat(req.body.amount));
-
+			console.log("the deposit is:" + req.body.amount);
+			updateBalance(
+				req.body.userId,
+				"deposit",
+				parseFloat(req.body.amount)
+			);
 		}
 	});
 };
