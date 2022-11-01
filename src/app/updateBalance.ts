@@ -22,7 +22,7 @@ const updateBalance = (userId: number, type: string, amount: number): void => {
 			User.reduceBalance(updateObject);
 			break;
 		case "sell":
-			User.reduceBalance(updateObject);
+			User.addBalance(updateObject);
 			break;
 		// default:
 		// 	break;
