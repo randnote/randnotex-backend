@@ -15,6 +15,9 @@ module.exports = (app: Application) => {
 	app.get("/zarbalance/:userId", User.zarbalance); // get zar balance
 	app.post("/deposit", User.deposit); // create deposit
 
+	// get users public/private keys... 
+	app.get("/getKeys/:userId", User.getKeys);
+
 	// get users that are auto generated... (meaning, that have the email address : johnDoe@randnotex.com)
 	app.get("/userfindAutoGens", User.findAutoGens);
 

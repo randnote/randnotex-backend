@@ -93,9 +93,9 @@ export default class User {
 	}
 
 	// find an user by ID method:
-	static findById(user: any, result: any) {
+	static findById(userId: any, result: any) {
 		sql.query(
-			`SELECT * FROM users WHERE id = ${user}`,
+			`SELECT * FROM users WHERE id = ${userId}`,
 			(err: Error, res: any) => {
 				if (err) {
 					console.log("error: ", err);
@@ -106,6 +106,30 @@ export default class User {
 				if (res.length) {
 					console.log("found user: ", res[0]);
 					result(null, res[0]);
+					return;
+				}
+				// havent found a user:
+				result({ kind: "not_found" }, null);
+			}
+		);
+	}
+
+	// find the keys of the user, by inner joining the user table and addresses table:
+	static getKeys(userId: any, result: any) {
+		sql.query(
+			`SELECT users.id AS user_id, addresses.publicAddress AS publicKey, addresses.privateAddress AS privateKey FROM users
+			INNER JOIN addresses ON users.id = addresses.user_id
+			WHERE users.id = ${userId} `,
+			(err: Error, res: any) => {
+				if (err) {
+					console.log("error: ", err);
+					result(err, null);
+					return;
+				}
+
+				if (res.length) {
+					console.log("found user: ", res[0]);
+					result(null, res);
 					return;
 				}
 				// havent found a user:

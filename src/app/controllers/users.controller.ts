@@ -86,6 +86,23 @@ exports.findOne = (req: any, res: any) => {
 	});
 };
 
+exports.getKeys = (req: any, res: any) => {
+	User.getKeys(req.params.userId, (err: any, data: any) => {
+		if (err) {
+			if (err.kind === "not_found") {
+				res.status(404).send({
+					message: `Not found User with id ${req.params.userId}.`,
+				});
+			} else {
+				res.status(500).send({
+					message:
+						"Error retrieving User with id " + req.params.userId,
+				});
+			}
+		} else res.send(data);
+	});
+};
+
 exports.findAutoGens = (req: any, res: any) => {
 	User.findAutoGens((err: any, data: any): any => {
 		if (err)
