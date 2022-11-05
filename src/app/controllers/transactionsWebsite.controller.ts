@@ -27,7 +27,12 @@ exports.create = (req: Request, res: Response) => {
 					err.message ||
 					"Some error occurred while creating the transaction.",
 			});
-		else res.send(data);
+		else{
+			res.send(data);
+			
+			// we need to send this user some NOTES
+			
+		}
 	});
 };
 
