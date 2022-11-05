@@ -3,7 +3,6 @@ import TransactionWebsite from "../models/transactionsWebsite.model";
 import { PUBLICKEY, PRIVATEKEY } from "../config/randnoteSiteKey";
 const User = require("../controllers/users.controller");
 
-
 // Create transactionWebsite:
 exports.create = (req: Request, res: Response) => {
 	// Validate request
@@ -32,27 +31,23 @@ exports.create = (req: Request, res: Response) => {
 			});
 		else {
 			res.send(data);
-		
+
 			// we need to send this user some NOTES:
 			// i need to user the users id to get their private and public key
 			let obj = User.getKeysLocal(req.body.user_id);
-			console.log(obj)
-
+			console.log(obj);
 
 			// if the user is buying notes- we send them notes:
-			if(req.body.ordertype == "buy"){
+			if (req.body.ordertype == "buy") {
 				let transactionInformation = {
 					fromAddress: PUBLICKEY,
-					toAddress: '',
-					fromAddressPrivateKey: PRIVATEKEY ,
-					amount: req.body.notes
-				}
-			}else if(req.body.ordertype == "sell"){
+					toAddress: "",
+					fromAddressPrivateKey: PRIVATEKEY,
+					amount: req.body.notes,
+				};
+			} else if (req.body.ordertype == "sell") {
 				// before i do this, i need to extract their public and private address
-
-				
 			}
-
 		}
 	});
 };

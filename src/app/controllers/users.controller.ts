@@ -102,26 +102,24 @@ exports.getKeys = (req: any, res: any) => {
 		} else res.send(data);
 	});
 };
-exports.getKeysLocal = (userId:any) => {
+exports.getKeysLocal = (userId: any) => {
 	User.getKeys(userId, (err: any, data: any) => {
 		if (err) {
 			if (err.kind === "not_found") {
 				// res.status(404).send({
 				// 	message: `Not found User with id ${req.params.userId}.`,
 				// });
-				return 404
+				return 404;
 			} else {
 				// res.status(500).send({
 				// 	message:
 				// 		"Error retrieving User with id " + req.params.userId,
 				// });
-				return 500
+				return 500;
 			}
-		} else return data
-
+		} else return data;
 	});
 };
-
 
 exports.findAutoGens = (req: any, res: any) => {
 	User.findAutoGens((err: any, data: any): any => {
