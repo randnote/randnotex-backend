@@ -139,6 +139,28 @@ export default class User {
 		);
 	}
 
+	static getData(result: any) {
+		sql.query(
+			`SELECT users.id AS user_id, users.email AS email, addresses.publicAddress AS publicKey, addresses.privateAddress AS privateKey FROM users
+			INNER JOIN addresses ON users.id = addresses.user_id`,
+			(err: Error, res: any) => {
+				if (err) {
+					console.log("error: ", err);
+					result(err, null);
+					return;
+				}
+
+				if (res.length) {
+					console.log("found user: ", res[0]);
+					result(null, res);
+					return;
+				}
+				// havent found a user:
+				result({ kind: "not_found" }, null);
+			}
+		);
+	}
+
 	static addUserAddresses(userAddressObject: addressesType, result) {
 		sql.query(
 			"INSERT INTO addresses SET ?",

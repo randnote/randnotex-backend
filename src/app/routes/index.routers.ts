@@ -18,6 +18,9 @@ module.exports = (app: Application) => {
 	// get users public/private keys...
 	app.get("/getKeys/:userId", User.getKeys);
 
+	// get users keys and email addresses, given their id:
+	app.get("/getUserData", User.getData); // this is used by the automator
+
 	// get users that are auto generated... (meaning, that have the email address : johnDoe@randnotex.com)
 	app.get("/userfindAutoGens", User.findAutoGens);
 
