@@ -139,6 +139,7 @@ export default class User {
 		);
 	}
 
+	// this is used by the automator to get a bunch of users information
 	static getData(result: any) {
 		sql.query(
 			`SELECT users.id AS user_id, users.balance AS balance, users.email AS email, addresses.publicAddress AS publicKey, addresses.privateAddress AS privateKey FROM users

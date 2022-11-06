@@ -1,6 +1,7 @@
 import { Application, Request, Response, NextFunction } from "express";
 import TransactionWebsite from "../models/transactionsWebsite.model";
 import { PUBLICKEY, PRIVATEKEY } from "../config/randnoteSiteKey";
+import Axios  from "axios";
 const User = require("../controllers/users.controller");
 
 // Create transactionWebsite:
@@ -36,15 +37,24 @@ exports.create = (req: Request, res: Response) => {
 			// i need to user the users id to get their private and public key
 			let obj = User.getKeysLocal(req.body.user_id);
 			console.log(obj);
-
+			// console.log()
 			// if the user is buying notes- we send them notes:
 			if (req.body.ordertype == "buy") {
 				let transactionInformation = {
 					fromAddress: PUBLICKEY,
-					toAddress: "",
+					toAddress: obj.publicKey, //
 					fromAddressPrivateKey: PRIVATEKEY,
 					amount: req.body.notes,
 				};
+
+				// now call the blockchain to execute:
+				Axios.post(`http://localhost:8033/transaction`, transactionInformation)
+					.then((res) => {
+						console.log(res.data);
+					})
+					.catch((err) => {
+						console.log(err);
+					});
 			} else if (req.body.ordertype == "sell") {
 				// before i do this, i need to extract their public and private address
 			}
