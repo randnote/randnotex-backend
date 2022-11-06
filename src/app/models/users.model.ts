@@ -117,7 +117,7 @@ export default class User {
 	// find the keys of the user, by inner joining the user table and addresses table:
 	// im realizing that i never needed to Join anything, i wouldve been just fine with SELECT all from addresses where user_id = id.. lol
 	static getKeys(userId: any, result: any) {
-		console.log("getKeys model called")
+		console.log("getKeys model called");
 		sql.query(
 			`SELECT users.id AS user_id, addresses.publicAddress AS publicKey, addresses.privateAddress AS privateKey FROM users
 			INNER JOIN addresses ON users.id = addresses.user_id
@@ -130,7 +130,8 @@ export default class User {
 				}
 
 				if (res.length) {
-					console.log("found user: ", res[0]);
+					// console.log("found user: ", res[0]);
+					// console.log(res)
 					result(null, res);
 					return;
 				}

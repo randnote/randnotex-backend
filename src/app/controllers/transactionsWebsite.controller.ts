@@ -26,15 +26,41 @@ exports.create = (req: Request, res: Response) => {
 		timestamp: new Date().toISOString().slice(0, 19).replace("T", " "),
 	});
 
-	TransactionWebsite.create(transaction, async(err: Error, data: object) => {
-		if (err){
+	TransactionWebsite.create(transaction, async (err: Error, data: object) => {
+		if (err) {
 			res.status(500).send({
 				message:
 					err.message ||
 					"Some error occurred while creating the transaction.",
 			});
-		}else {
-			sendUserNotes(req.body.user_id, req.body.ordertype, req.body.notes);
+		} else {
+
+			//get first...
+			Axios.get(`http://localhost:8024/getKeys/${req.body.user_id}`)
+			.then((newRes) => {
+				let transactionInformation = {
+					fromAddress: PUBLICKEY,
+					toAddress: newRes.data[0].publicKey, //
+					fromAddressPrivateKey: PRIVATEKEY,
+					amount: req.body.notes,
+				};
+
+				let snack = JSON.stringify(transactionInformation);
+
+				// now , send the info to the blockchain
+				Axios.post(`http://localhost:8033/transaction`, {obj: snack})
+				.then((res) => {
+					console.log(res.data);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+
+			//
 			res.send(data);
 		}
 	});
@@ -67,46 +93,46 @@ exports.WebsitefindAllUser = (req: Request, res: Response) => {
 	);
 };
 
-const sendUserNotes = async(userId: number, ordertype: string, notes: number) =>{
-	// we need to send this user some NOTES:
-	// i need to user the users id to get their private and public key
-	User.getKeys(userId, (err: any, data: any) => {
-		if (err) {
-			if (err.kind === "not_found") {
-				console.log("err")
-			} else {
-				console.log("err")
-			}
-		} else {
-			if (ordertype == "buy") {
-				let transactionInformation = {
-					fromAddress: PUBLICKEY,
-					toAddress: data.publicKey, //
-					fromAddressPrivateKey: PRIVATEKEY,
-					amount: notes,
-				};
-				let snack = JSON.stringify(transactionInformation);
-			
-				// now call the blockchain to execute:
-				// Axios.post(
-				// 	`http://localhost:8033/transaction`, snack
-				// )
-				// .then((res) => {
-				// 	console.log(res.data);
-				// })
-				// .catch((err) => {
-				// 	console.log(err);
-				// });
-				console.log(snack)
-		
-			} else if(ordertype == "sell") {
-				// before i do this, i need to extract their public and private address
-			}
-		}
-	})
-	
-	
+// const sendUserNotes = async (
+// 	userId: number,
+// 	ordertype: string,
+// 	notes: number
+// ) => {
+// 	// we need to send this user some NOTES:
+// 	// i need to user the users id to get their private and public key
+// 	User.getKeys(userId, (err: any, data: any) => {
+// 		if (err) {
+// 			if (err.kind === "not_found") {
+// 				console.log("err");
+// 			} else {
+// 				console.log("err");
+// 			}
+// 		} else {
+// 			if (ordertype == "buy" && data ) {
+// 				let transactionInformation = {
+// 					fromAddress: PUBLICKEY,
+// 					toAddress: data.publicKey, //
+// 					fromAddressPrivateKey: PRIVATEKEY,
+// 					amount: notes,
+// 				};
+// 				let snack = JSON.stringify(transactionInformation);
 
-	
-	// return obj;
-}
+// 				// now call the blockchain to execute:
+// 				// Axios.post(
+// 				// 	`http://localhost:8033/transaction`, snack
+// 				// )
+// 				// .then((res) => {
+// 				// 	console.log(res.data);
+// 				// })
+// 				// .catch((err) => {
+// 				// 	console.log(err);
+// 				// });
+// 				console.log(transactionInformation);
+// 			} else if (ordertype == "sell") {
+// 				// before i do this, i need to extract their public and private address
+// 			}
+// 		}
+// 	});
+
+// 	// return obj;
+// };
