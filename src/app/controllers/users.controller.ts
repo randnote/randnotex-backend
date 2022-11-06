@@ -129,8 +129,7 @@ exports.getData = (req: any, res: any) => {
 				});
 			} else {
 				res.status(500).send({
-					message:
-						"Error retrieving Users",
+					message: "Error retrieving Users",
 				});
 			}
 		} else res.send(data);

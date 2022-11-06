@@ -141,7 +141,7 @@ export default class User {
 
 	static getData(result: any) {
 		sql.query(
-			`SELECT users.id AS user_id, users.email AS email, addresses.publicAddress AS publicKey, addresses.privateAddress AS privateKey FROM users
+			`SELECT users.id AS user_id, users.balance AS balance, users.email AS email, addresses.publicAddress AS publicKey, addresses.privateAddress AS privateKey FROM users
 			INNER JOIN addresses ON users.id = addresses.user_id`,
 			(err: Error, res: any) => {
 				if (err) {
@@ -151,7 +151,6 @@ export default class User {
 				}
 
 				if (res.length) {
-					console.log("found user: ", res[0]);
 					result(null, res);
 					return;
 				}
