@@ -4,7 +4,7 @@ import { updateBalanceType } from "./models/users.model";
 /* This file in the switch statments calls addBalance() and reduceBalance() in the User Model */
 
 const updateBalance = (userId: number, type: string, amount: number): void => {
-	console.log(userId + " " + type + " " + " " + amount);
+	// console.log(userId + " " + type + " " + " " + amount);
 	let updateObject = {
 		userId: userId,
 		type: type,
