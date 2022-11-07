@@ -258,6 +258,40 @@ export default class User {
 		}); // end of addBalance func
 	};
 
+	static addBalance2 = async (updateObject: updateBalanceType) => {
+		// first get the existing balance... and add to it.
+		let existingBalance: number = 0;
+		let newBalance: number;
+		let updateObjAmount: number;
+		// console.log("updateobject is : "+updateObject)
+		this.zarbalance(updateObject.userId, (err: Error, data: number) => {
+			if (err) {
+				console.log(err);
+			}
+			existingBalance = data;
+			// console.log(updateObject)
+			// console.log(existingBalance)
+			// updateObjAmount = parseFloat(updateObject.amount.toFixed(2));
+			updateObjAmount = updateObject.amount;
+			newBalance = updateObjAmount + existingBalance;
+			// console.log(newBalance);
+			console.log(existingBalance)
+			console.log(newBalance)
+
+			sql.query(
+				`UPDATE users SET balance = '${newBalance}' WHERE id='${updateObject.userId}' `,
+				(err: Error, res: any) => {
+					if (err) {
+						console.log("error: ", err);
+						return;
+					}
+
+					console.log(res);
+				}
+			); 
+		}); // end of addBalance func
+	};
+
 	static reduceBalance = (updateObject: updateBalanceType) => {
 		// first get the existing balance... and add to it.
 		let existingBalance: number = 0;

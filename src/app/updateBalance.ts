@@ -5,6 +5,7 @@ import { updateBalanceType } from "./models/users.model";
 
 const updateBalance = (userId: number, type: string, amount: number): void => {
 	// console.log(userId + " " + type + " " + " " + amount);
+	// console.log("updatebalance is called ")
 	let updateObject = {
 		userId: userId,
 		type: type,
@@ -22,7 +23,7 @@ const updateBalance = (userId: number, type: string, amount: number): void => {
 			User.reduceBalance(updateObject);
 			break;
 		case "sell":
-			User.addBalance(updateObject);
+			User.addBalance2(updateObject);
 			break;
 		// default:
 		// 	break;

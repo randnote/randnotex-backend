@@ -32,10 +32,10 @@ export default class TransactionWebsite {
 					return;
 				}
 
-				console.log("created transaction: ", {
-					id: res.insertId,
-					...newtransaction,
-				});
+				// console.log("created transaction: ", {
+				// 	id: res.insertId,
+				// 	...newtransaction,
+				// });
 
 				let obj = {
 					id: res.insertId,
@@ -56,7 +56,7 @@ export default class TransactionWebsite {
 					result(err, null);
 					return;
 				}
-				console.log("user: ", res);
+				// console.log("user: ", res);
 				result(null, res);
 			}
 		);
@@ -71,7 +71,7 @@ export default class TransactionWebsite {
 					result(err, null);
 					return;
 				}
-				console.log("user: ", res);
+				// console.log("user: ", res);
 				result(null, res);
 			}
 		);

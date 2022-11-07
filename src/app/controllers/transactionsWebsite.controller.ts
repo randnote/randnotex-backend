@@ -2,7 +2,9 @@ import { Application, Request, Response, NextFunction } from "express";
 import TransactionWebsite from "../models/transactionsWebsite.model";
 import { PUBLICKEY, PRIVATEKEY } from "../config/randnoteSiteKey";
 import Axios from "axios";
+
 import User from "../models/users.model";
+import updateBalance from '../updateBalance'
 
 // Create transactionWebsite:
 exports.create = (req: Request, res: Response) => {
@@ -31,8 +33,10 @@ exports.create = (req: Request, res: Response) => {
 					"Some error occurred while creating the transaction.",
 			});
 		} else {
-			//get first...
-			Axios.get(`http://localhost:8024/getKeys/${req.body.user_id}`)
+
+			if(req.body.ordertype == "buy"){
+				//get first...
+				Axios.get(`http://localhost:8024/getKeys/${req.body.user_id}`)
 				.then((newRes) => {
 					let transactionInformation = {
 						fromAddress: PUBLICKEY,
@@ -40,7 +44,6 @@ exports.create = (req: Request, res: Response) => {
 						fromAddressPrivateKey: PRIVATEKEY,
 						amount: req.body.notes,
 					};
-
 					let snack = JSON.stringify(transactionInformation);
 
 					// now , send the info to the blockchain
@@ -58,8 +61,40 @@ exports.create = (req: Request, res: Response) => {
 					console.log(err);
 				});
 
-			//
-			res.send(data);
+				//
+				res.send(data);
+			}else if(req.body.ordertype == "sell"){
+				console.log("we wanna sell")
+				Axios.get(`http://localhost:8024/getKeys/${req.body.user_id}`)
+				.then((newRes) => {
+					let transactionInformation = {
+						fromAddress: newRes.data[0].publicKey,
+						toAddress: PUBLICKEY,
+						fromAddressPrivateKey: newRes.data[0].privateKey,
+						amount: req.body.notes,
+					};
+					let snack = JSON.stringify(transactionInformation);
+					
+					// now , send the info to the blockchain
+					Axios.post(`http://localhost:8033/transaction`, {
+						obj: snack,
+					})
+						.then((res) => {
+							// console.log(res.data);
+							// console.log("post req")
+							updateBalance(req.body.user_id, "sell", req.body.amount);
+						})
+						.catch((err) => {
+							console.log(err);
+						});
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+
+				res.send(data);
+			}
+			
 		}
 	});
 };
@@ -90,4 +125,3 @@ exports.WebsitefindAllUser = (req: Request, res: Response) => {
 		}
 	);
 };
-
