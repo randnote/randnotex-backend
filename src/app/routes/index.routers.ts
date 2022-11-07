@@ -5,6 +5,7 @@ module.exports = (app: Application) => {
 	const TransactionsBlockchain = require("../controllers/transactionsBlockchain.controller");
 	const TransactionsWebsite = require("../controllers/transactionsWebsite.controller");
 	const Card = require("../controllers/cards.controller");
+	const V = require("../valueDeterminer");
 
 	// users
 	app.post("/signin", User.signin);
@@ -24,6 +25,8 @@ module.exports = (app: Application) => {
 	// get users that are auto generated... (meaning, that have the email address : johnDoe@randnotex.com)
 	// also, these are what i use in the automator
 	app.get("/userfindAutoGens", User.findAutoGens);
+
+	app.get("/valueDeterminer/:amount", V.valueDeterminer)
 
 	// transactionBlockchain
 	app.post("/transactionBlockchain", TransactionsBlockchain.create); // make a transaction
