@@ -19,9 +19,10 @@ module.exports = (app: Application) => {
 	app.get("/getKeys/:userId", User.getKeys);
 
 	// get users keys and email addresses, given their id:
-	app.get("/getUserData", User.getData); // this is used by the automator
+	// app.get("/getUserData", User.getData); // this is used by the automator
 
 	// get users that are auto generated... (meaning, that have the email address : johnDoe@randnotex.com)
+	// also, these are what i use in the automator
 	app.get("/userfindAutoGens", User.findAutoGens);
 
 	// transactionBlockchain

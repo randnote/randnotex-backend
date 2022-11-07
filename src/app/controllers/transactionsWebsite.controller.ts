@@ -4,7 +4,7 @@ import { PUBLICKEY, PRIVATEKEY } from "../config/randnoteSiteKey";
 import Axios from "axios";
 
 import User from "../models/users.model";
-import updateBalance from '../updateBalance'
+import updateBalance from "../updateBalance";
 
 // Create transactionWebsite:
 exports.create = (req: Request, res: Response) => {
@@ -33,68 +33,70 @@ exports.create = (req: Request, res: Response) => {
 					"Some error occurred while creating the transaction.",
 			});
 		} else {
-
-			if(req.body.ordertype == "buy"){
+			if (req.body.ordertype == "buy") {
 				//get first...
 				Axios.get(`http://localhost:8024/getKeys/${req.body.user_id}`)
-				.then((newRes) => {
-					let transactionInformation = {
-						fromAddress: PUBLICKEY,
-						toAddress: newRes.data[0].publicKey, //
-						fromAddressPrivateKey: PRIVATEKEY,
-						amount: req.body.notes,
-					};
-					let snack = JSON.stringify(transactionInformation);
+					.then((newRes) => {
+						let transactionInformation = {
+							fromAddress: PUBLICKEY,
+							toAddress: newRes.data[0].publicKey, //
+							fromAddressPrivateKey: PRIVATEKEY,
+							amount: req.body.notes,
+						};
+						let snack = JSON.stringify(transactionInformation);
 
-					// now , send the info to the blockchain
-					Axios.post(`http://localhost:8033/transaction`, {
-						obj: snack,
-					})
-						.then((res) => {
-							// console.log(res.data);
+						// now , send the info to the blockchain
+						Axios.post(`http://localhost:8033/transaction`, {
+							obj: snack,
 						})
-						.catch((err) => {
-							console.log(err);
-						});
-				})
-				.catch((err) => {
-					console.log(err);
-				});
+							.then((res) => {
+								// console.log(res.data);
+							})
+							.catch((err) => {
+								console.log(err);
+							});
+					})
+					.catch((err) => {
+						console.log(err);
+					});
 
 				//
 				res.send(data);
-			}else if(req.body.ordertype == "sell"){
-				console.log("we wanna sell")
+			} else if (req.body.ordertype == "sell") {
+				console.log("we wanna sell");
 				Axios.get(`http://localhost:8024/getKeys/${req.body.user_id}`)
-				.then((newRes) => {
-					let transactionInformation = {
-						fromAddress: newRes.data[0].publicKey,
-						toAddress: PUBLICKEY,
-						fromAddressPrivateKey: newRes.data[0].privateKey,
-						amount: req.body.notes,
-					};
-					let snack = JSON.stringify(transactionInformation);
-					
-					// now , send the info to the blockchain
-					Axios.post(`http://localhost:8033/transaction`, {
-						obj: snack,
-					})
-						.then((res) => {
-							// console.log(res.data);
-							// console.log("post req")
-							updateBalance(req.body.user_id, "sell", req.body.amount);
+					.then((newRes) => {
+						let transactionInformation = {
+							fromAddress: newRes.data[0].publicKey,
+							toAddress: PUBLICKEY,
+							fromAddressPrivateKey: newRes.data[0].privateKey,
+							amount: req.body.notes,
+						};
+						let snack = JSON.stringify(transactionInformation);
+
+						// now , send the info to the blockchain
+						Axios.post(`http://localhost:8033/transaction`, {
+							obj: snack,
 						})
-						.catch((err) => {
-							console.log(err);
-						});
-				})
-				.catch((err) => {
-					console.log(err);
-				});
+							.then((res) => {
+								// console.log(res.data);
+								// console.log("post req")
+								updateBalance(
+									req.body.user_id,
+									"sell",
+									req.body.amount
+								);
+							})
+							.catch((err) => {
+								console.log(err);
+							});
+					})
+					.catch((err) => {
+						console.log(err);
+					});
 
 				res.send(data);
 			}
-			
 		}
 	});
 };

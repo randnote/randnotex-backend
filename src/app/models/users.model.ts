@@ -79,14 +79,14 @@ export default class User {
 
 	static findAutoGens(result: any) {
 		sql.query(
-			"SELECT * FROM users WHERE `email` LIKE '%randnoteGen.com' ",
+			"SELECT * FROM users WHERE `email` LIKE '%randnotex.co.za' ",
 			(err: Error, res: Response) => {
 				if (err) {
 					console.log("error: ", err);
 					result(err, null);
 					return;
 				}
-				console.log("Users: ", res);
+				// console.log("Users: ", res);
 				result(null, res);
 			}
 		);
@@ -275,8 +275,8 @@ export default class User {
 			updateObjAmount = updateObject.amount;
 			newBalance = updateObjAmount + existingBalance;
 			// console.log(newBalance);
-			console.log(existingBalance)
-			console.log(newBalance)
+			console.log(existingBalance);
+			console.log(newBalance);
 
 			sql.query(
 				`UPDATE users SET balance = '${newBalance}' WHERE id='${updateObject.userId}' `,
@@ -288,7 +288,7 @@ export default class User {
 
 					console.log(res);
 				}
-			); 
+			);
 		}); // end of addBalance func
 	};
 
