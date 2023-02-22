@@ -6,6 +6,7 @@ module.exports = (app: Application) => {
 	const TransactionsWebsite = require("../controllers/transactionsWebsite.controller");
 	const Card = require("../controllers/cards.controller");
 	const V = require("../valueDeterminer");
+	const P = require("../controllers/price.controller")
 
 	// users
 	app.post("/signin", User.signin);
@@ -18,6 +19,9 @@ module.exports = (app: Application) => {
 
 	// get users public/private keys...
 	app.get("/getKeys/:userId", User.getKeys);
+
+	// get price and send to the automator:
+	app.get("/getCurrentPrice",P.getCurrentPrice )
 
 	// get users keys and email addresses, given their id:
 	// app.get("/getUserData", User.getData); // this is used by the automator

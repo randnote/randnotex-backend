@@ -16,6 +16,7 @@ var allowedOrigins = [
 	"http://localhost:3000/signin",
 	"http://localhost:3000/dashboard",
 	"http://localhost:3000/deposit",
+	"*"
 ];
 app.use(
 	cors({
@@ -43,11 +44,10 @@ const server = http.createServer(app);
 const io = require("socket.io")(server, {
 	cors: {
 		// origin: ["http://localhost:3000", "http://localhost:3000/chart", '*'],
-		origins: '*:*',
+		origins: "*:*",
 		methods: ["GET", "POST"],
 	},
 });
-
 
 io.on("connection", (socket: any) => {
 	console.log("New client connected");
