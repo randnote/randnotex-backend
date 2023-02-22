@@ -49,5 +49,11 @@ const calculatePrice = async () => {
 	return PRICE;
 };
 
+// write a controller that returns the price to the api....
+const getPriceCOntroller = () =>{
+	return null;
+}
+
+
 // module.exports = {calculatePrice}
 export default calculatePrice;
