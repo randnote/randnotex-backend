@@ -55,7 +55,7 @@ const calculatePriceClient = async (result: any) => {
 		// console.log("caught ya");
 		NEW_SUPPLY = 100;
 	}
-	
+
 	if (CURRENT_SUPPLY !== NEW_SUPPLY) {
 		let s: number = CURRENT_SUPPLY / NEW_SUPPLY;
 		s = s * 100;
@@ -69,7 +69,6 @@ const calculatePriceClient = async (result: any) => {
 		});
 	}
 	result(null, PRICE);
-
 };
 
 // write a controller that returns the price to the api....
@@ -79,4 +78,4 @@ const getPriceCOntroller = () => {
 
 // module.exports = {calculatePrice}
 export default calculatePrice;
-export {calculatePriceClient};
+export { calculatePriceClient };
