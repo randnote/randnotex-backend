@@ -54,7 +54,7 @@ const calculatePriceClient = async (result: any) => {
 	if (NEW_SUPPLY === 0) {
 		// console.log("caught ya");
 		NEW_SUPPLY = 100;
-		result(null,PRICE)
+		result(null, PRICE);
 	}
 
 	if (CURRENT_SUPPLY !== NEW_SUPPLY) {
@@ -70,7 +70,6 @@ const calculatePriceClient = async (result: any) => {
 		});
 		result(null, PRICE);
 	}
-	
 };
 
 // write a controller that returns the price to the api....
