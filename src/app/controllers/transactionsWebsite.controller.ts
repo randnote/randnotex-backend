@@ -79,6 +79,7 @@ exports.create = (req: Request, res: Response) => {
 							obj: snack,
 						})
 							.then((res) => {
+								console.log(res);
 								// console.log(res.data);
 								// console.log("post req")
 								updateBalance(
