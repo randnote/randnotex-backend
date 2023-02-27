@@ -46,6 +46,7 @@ const calculatePrice = async () => {
 
 	// now , write an influencer when user buys and sells....
 
+	
 	return PRICE;
 };
 
