@@ -12,7 +12,7 @@ let CURRENT_SUPPLY: number = 100; // careful buddy, this starting supply can cau
 
 	THEREFORE: if you ever want to display the supply, you can either give user the CURRENT_SUPPLY 
 	or you can look in the blockchain itself. !
-*/ 
+*/
 
 // this function just calls the blockchain to get the number of notes in circulation
 const getSupply = async () => {
@@ -45,7 +45,6 @@ const calculatePrice = async () => {
 		let s: number = CURRENT_SUPPLY / NEW_SUPPLY;
 		s = s * 100;
 		PRICE = (PRICE * s) / 100;
-		CURRENT_SUPPLY = NEW_SUPPLY;
 		console.log({
 			s: s,
 			price: PRICE,
@@ -61,10 +60,10 @@ const calculatePrice = async () => {
 
 const calculatePriceClient = async (result: any) => {
 	let NEW_SUPPLY: number = await getSupply();
-	console.log("new-Supply is : "+ NEW_SUPPLY+ "CurrentSupply is : "+CURRENT_SUPPLY)
+	console.log(
+		"new-Supply is : " + NEW_SUPPLY + "CurrentSupply is : " + CURRENT_SUPPLY
+	);
 
-
-	
 	// console.log("new-Supply is : "+ NEW_SUPPLY)
 	// console.log(NEW_SUPPLY)
 
@@ -77,7 +76,7 @@ const calculatePriceClient = async (result: any) => {
 	}
 
 	// console.log("current supply is : "+ CURRENT_SUPPLY + ". New supply is: "+ NEW_SUPPLY)
-	if (CURRENT_SUPPLY !== NEW_SUPPLY) { 
+	if (CURRENT_SUPPLY !== NEW_SUPPLY) {
 		let s: number = CURRENT_SUPPLY / NEW_SUPPLY;
 		s = s * 100;
 		PRICE = (PRICE * s) / 100;
@@ -87,11 +86,11 @@ const calculatePriceClient = async (result: any) => {
 			CURRENT_SUPPLY: CURRENT_SUPPLY,
 			NEW_SUPPLY: NEW_SUPPLY,
 		});
-		console.log("price returned is: "+PRICE);
+		console.log("price returned is: " + PRICE);
 		result(null, PRICE);
 	}
 	// console.log(CURRENT_SUPPLY)
-	console.log("-------------------------------")
+	console.log("-------------------------------");
 };
 
 // write a controller that returns the price to the api....

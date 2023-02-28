@@ -3,7 +3,6 @@ import { calculatePriceClient } from "../price";
 
 exports.getCurrentPrice = (req: any, res: any) => {
 	calculatePriceClient((err: any, data: any) => {
-		
 		if (err) {
 			console.log("error: ", err);
 			res(err, null);
