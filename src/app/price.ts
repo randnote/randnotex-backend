@@ -3,7 +3,7 @@ import { Console } from "console";
 
 let PRICE: number = 1000;
 let CURRENT_SUPPLY: number = 100; // careful buddy, this starting supply can cause infite numbers if not set correctly
-let BUYING_PERCENTAGE_INCREASE :number = 20; 
+let BUYING_PERCENTAGE_INCREASE: number = 20;
 /*
 	THIS FILE IS VERY IMPORTANT:
 	- we re calculate price whenever there is a mine...
@@ -34,48 +34,31 @@ const calculatePrice = async (buy_sell?: boolean, buy_sell_value?: number) => {
 	// buy_sell_value is the amount we bought for.. eg R400 for 0.4 notes.
 	// will use buy_sell to influence price more, at a later stage...
 
-	
 	let returnedPrice = 0;
-	
+	let buy_sellVal = buy_sell;
+	let buy_sell_valueVal = buy_sell_value;
+
 	// means that we have a buy order.. so increase price:
-	calculatePriceClient((err: any, data: any) => {
-		if (err) {
-			console.log("error: ", err);
-			return;
-		} else {
-			if(buy_sell == true){
+	calculatePriceClient().then(res) => {
+		
+			if (buy_sell == true) {
 				// buy order... increase price:
-				console.log('my data is :'+data)
-				let percentage = (data * BUYING_PERCENTAGE_INCREASE) / 100 ;// we incerease price by 20 percent
+				console.log("my price is currently :" + data + "before manipulation");
+				let percentage = (data * BUYING_PERCENTAGE_INCREASE) / 100; // we incerease price by 20 percent
 				returnedPrice = data + percentage;
-				console.log('new price after buy order is: '+ returnedPrice)
+				console.log("new price after buy order(manipulation) is: " + returnedPrice);
 				PRICE = returnedPrice;
 				return returnedPrice;
-			}else if(buy_sell == false){
+			} else if (buy_sell == false) {
 				// sell order... decrease price:
 				// console.log(data)
-				let percentage = (data * BUYING_PERCENTAGE_INCREASE) / 100 ;// we incerease price by 20 percent
+				let percentage = (data * BUYING_PERCENTAGE_INCREASE) / 100; // we incerease price by 20 percent
 				returnedPrice = data - percentage;
 				PRICE = returnedPrice;
 				return returnedPrice;
 			}
-			
-		}
-	});
+	};
 
-	// if (CURRENT_SUPPLY !== NEW_SUPPLY) {
-	// 	let s: number = CURRENT_SUPPLY / NEW_SUPPLY;
-	// 	s = s * 100;
-	// 	//PRICE = (PRICE * s) / 100;
-	// 	console.log({
-	// 		s: s,
-	// 		price: PRICE,
-	// 		CURRENT_SUPPLY: CURRENT_SUPPLY,
-	// 		NEW_SUPPLY: NEW_SUPPLY,
-	// 	});
-	// 	console.log("price returned is: " + PRICE);
-	// 	return PRICE;
-	// }
 };
 
 const calculatePriceClient = async (result: any) => {

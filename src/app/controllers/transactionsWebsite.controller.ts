@@ -15,7 +15,7 @@ exports.create = (req: Request, res: Response) => {
 		console.log("empty");
 	}
 
-	let amount:any = req.body.amount;
+	let amount: any = req.body.amount;
 	const transaction = new TransactionWebsite({
 		user_id: req.body.user_id,
 		price: req.body.price,
@@ -83,15 +83,15 @@ exports.create = (req: Request, res: Response) => {
 							obj: snack,
 						})
 							.then((res) => {
-
 								// increase the value of price coz we bought...
 								// we make a little calculation to increase price twice in the calculate price function
 								let buy_sell = false; // if its a sell, its false
 								let buy_sell_value = amount;
-								console.log('buy sell value is :'+buy_sell_value)
+								console.log(
+									"buy sell value is :" + buy_sell_value
+								);
 								calculatePrice(buy_sell, buy_sell_value);
 
-								
 								updateBalance(
 									req.body.user_id,
 									"sell",
