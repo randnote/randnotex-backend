@@ -2,8 +2,6 @@ import { Application, Request, Response, NextFunction } from "express";
 import TransactionWebsite from "../models/transactionsWebsite.model";
 import { PUBLICKEY, PRIVATEKEY } from "../config/randnoteSiteKey";
 import Axios from "axios";
-
-import User from "../models/users.model";
 import updateBalance from "../updateBalance";
 
 // Create transactionWebsite:
