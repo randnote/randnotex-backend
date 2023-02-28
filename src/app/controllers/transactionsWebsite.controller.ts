@@ -3,6 +3,7 @@ import TransactionWebsite from "../models/transactionsWebsite.model";
 import { PUBLICKEY, PRIVATEKEY } from "../config/randnoteSiteKey";
 import Axios from "axios";
 import updateBalance from "../updateBalance";
+import calculatePrice from "../price";
 
 // Create transactionWebsite:
 exports.create = (req: Request, res: Response) => {
@@ -14,6 +15,7 @@ exports.create = (req: Request, res: Response) => {
 		console.log("empty");
 	}
 
+	let amount:any = req.body.amount;
 	const transaction = new TransactionWebsite({
 		user_id: req.body.user_id,
 		price: req.body.price,
@@ -48,7 +50,11 @@ exports.create = (req: Request, res: Response) => {
 							obj: snack,
 						})
 							.then((res) => {
-								// console.log(res.data);
+								// increase the value of price coz we bought...
+								// we make a little calculation to increase price twice in the calculate price function
+								let buy_sell = true; // if its a sell, its false
+								let buy_sell_value = amount;
+								calculatePrice(buy_sell, buy_sell_value);
 							})
 							.catch((err) => {
 								console.log(err);
@@ -77,9 +83,15 @@ exports.create = (req: Request, res: Response) => {
 							obj: snack,
 						})
 							.then((res) => {
-								console.log(res);
-								// console.log(res.data);
-								// console.log("post req")
+
+								// increase the value of price coz we bought...
+								// we make a little calculation to increase price twice in the calculate price function
+								let buy_sell = false; // if its a sell, its false
+								let buy_sell_value = amount;
+								console.log('buy sell value is :'+buy_sell_value)
+								calculatePrice(buy_sell, buy_sell_value);
+
+								
 								updateBalance(
 									req.body.user_id,
 									"sell",

@@ -30,7 +30,7 @@ module.exports = (app: Application) => {
 	// also, these are what i use in the automator
 	app.get("/userfindAutoGens", User.findAutoGens);
 
-	app.get("/valueDeterminer/:amount", V.valueDeterminer);
+	// app.get("/valueDeterminer/:amount", V.valueDeterminer);
 
 	// transactionBlockchain
 	app.post("/transactionBlockchain", TransactionsBlockchain.create); // make a transaction
