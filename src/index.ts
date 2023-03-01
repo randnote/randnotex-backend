@@ -1,6 +1,7 @@
 #!/usr/bin/env nodejs:
 import express, { Application, Request, Response, NextFunction } from "express";
-import calculatePrice from "./app/price";
+import calculatePrice, { calculatePriceClient, calculatePriceSocket } from "./app/price";
+// import { calculatePriceClient } from "./app/price";
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const app: Application = express();
@@ -54,7 +55,7 @@ io.on("connection", (socket: any) => {
 	if (interval) {
 		clearInterval(interval);
 	}
-	interval = setInterval(() => getApiAndEmit(socket), 3000);
+	interval = setInterval(() => getApiAndEmit(socket), 1000);
 	socket.on("disconnect", () => {
 		console.log("Client disconnected");
 		clearInterval(interval);
@@ -63,7 +64,7 @@ io.on("connection", (socket: any) => {
 
 const getApiAndEmit = async (socket: any) => {
 	// const response = new Date();
-	const response = await calculatePrice();
+	const response = await calculatePriceSocket();
 	let time: Date = new Date();
 
 	// Emitting a new message. Will be consumed by the client
