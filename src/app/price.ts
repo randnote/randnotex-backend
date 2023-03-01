@@ -14,52 +14,8 @@ let BUYING_PERCENTAGE_INCREASE: number = 20;
 	or you can look in the blockchain itself. !
 */
 
-// this function just calls the blockchain to get the number of notes in circulation
-const getSupply = async () => {
-	let supply: number = 0;
 
-	// remember to add env variable here...
-	await Axios.get(`http://localhost:8033/supply`)
-		.then(async (response: any) => {
-			supply = await response.data.supply;
-			return supply;
-		})
-		.catch((err) => {
-			console.log(err);
-		});
-	return supply;
-};
 
-const calculatePrice = async (buy_sell?: boolean, buy_sell_value?: number) => {
-	// buy_sell_value is the amount we bought for.. eg R400 for 0.4 notes.
-	// will use buy_sell to influence price more, at a later stage...
-
-	let returnedPrice = 0;
-	let buy_sellVal = buy_sell;
-	let buy_sell_valueVal = buy_sell_value;
-
-	// means that we have a buy order.. so increase price:
-	calculatePriceClient().then(res) => {
-		
-			if (buy_sell == true) {
-				// buy order... increase price:
-				console.log("my price is currently :" + data + "before manipulation");
-				let percentage = (data * BUYING_PERCENTAGE_INCREASE) / 100; // we incerease price by 20 percent
-				returnedPrice = data + percentage;
-				console.log("new price after buy order(manipulation) is: " + returnedPrice);
-				PRICE = returnedPrice;
-				return returnedPrice;
-			} else if (buy_sell == false) {
-				// sell order... decrease price:
-				// console.log(data)
-				let percentage = (data * BUYING_PERCENTAGE_INCREASE) / 100; // we incerease price by 20 percent
-				returnedPrice = data - percentage;
-				PRICE = returnedPrice;
-				return returnedPrice;
-			}
-	};
-
-};
 
 const calculatePriceClient = async (result: any) => {
 	let NEW_SUPPLY: number = await getSupply();
@@ -88,6 +44,58 @@ const calculatePriceClient = async (result: any) => {
 		result(null, PRICE);
 	}
 };
+
+// this function just calls the blockchain to get the number of notes in circulation
+const getSupply = async () => {
+	let supply: number = 0;
+
+	// remember to add env variable here...
+	await Axios.get(`http://localhost:8033/supply`)
+		.then(async (response: any) => {
+			supply = await response.data.supply;
+			return supply;
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+	return supply;
+};
+
+const calculatePrice = async (buy_sell?: boolean, buy_sell_value?: number) => {
+	// buy_sell_value is the amount we bought for.. eg R400 for 0.4 notes.
+	// will use buy_sell to influence price more, at a later stage...
+
+	let returnedPrice = 0;
+	let buy_sellVal = buy_sell;
+	let buy_sell_valueVal = buy_sell_value;
+
+	// means that we have a buy order.. so increase price:
+	calculatePriceClient((err: any, data: any) => {
+		if (err) {
+			console.log("error: ", err);
+			return;
+		} else {
+			if (buy_sell == true) {
+				// buy order... increase price:
+				console.log("my price is currently :" + data + "before manipulation");
+				let percentage = (data * BUYING_PERCENTAGE_INCREASE) / 100; // we incerease price by 20 percent
+				returnedPrice = data + percentage;
+				console.log("new price after buy order(manipulation) is: " + returnedPrice);
+				PRICE = returnedPrice;
+				return returnedPrice;
+			} else if (buy_sell == false) {
+				// sell order... decrease price:
+				let percentage = (data * BUYING_PERCENTAGE_INCREASE) / 100; // we incerease price by 20 percent
+				returnedPrice = data - percentage;
+				PRICE = returnedPrice;
+				return returnedPrice;
+			}
+			return;
+		}
+	})
+
+
+}
 
 // write a controller that returns the price to the api....
 const getPriceCOntroller = () => {
