@@ -16,26 +16,32 @@ let BUYING_PERCENTAGE_INCREASE: number = 20;
 
 const calculatePriceClient = async (result: any) => {
 	let NEW_SUPPLY: number = await getSupply();
-	
+	console.log('new supply is : '+ NEW_SUPPLY)
 	// this doesnt do anything, it just makes sure that the supply is never below 100;
 	if (NEW_SUPPLY === 0) {
 		NEW_SUPPLY = 100;
 		result(null, PRICE);
+		return;
 	}
 
-	// console.log("current supply is : "+ CURRENT_SUPPLY + ". New supply is: "+ NEW_SUPPLY)
+	console.log("current supply is : "+ CURRENT_SUPPLY + ". New supply is: "+ NEW_SUPPLY)
 	if (CURRENT_SUPPLY !== NEW_SUPPLY) {
 		let s: number = CURRENT_SUPPLY / NEW_SUPPLY;
 		s = s * 100;
 		PRICE = (PRICE * s) / 100;
-		// console.log({
-		// 	s: s,
-		// 	price: PRICE,
-		// 	CURRENT_SUPPLY: CURRENT_SUPPLY,
-		// 	NEW_SUPPLY: NEW_SUPPLY,
-		// });
-		console.log('Price is = '+ PRICE)
+		console.log({
+			s: s,
+			price: PRICE,
+			CURRENT_SUPPLY: CURRENT_SUPPLY,
+			NEW_SUPPLY: NEW_SUPPLY,
+		});
+		console.log("Price is = " + PRICE);
+		CURRENT_SUPPLY = NEW_SUPPLY
 		result(null, PRICE);
+		return;
+	}else{
+		result(null, PRICE);
+		return;
 	}
 };
 
@@ -76,23 +82,22 @@ const calculatePrice = async (buy_sell?: boolean, buy_sell_value?: number) => {
 				);
 				let percentage = (data * BUYING_PERCENTAGE_INCREASE) / 100; // we incerease price by 20 percent
 				returnedPrice = data + percentage;
-				
+
 				PRICE = returnedPrice;
-				console.log('Price is = '+ PRICE)
+				console.log("Price is = " + PRICE);
 				return returnedPrice;
 			} else if (buy_sell == false) {
 				// sell order... decrease price:
 				let percentage = (data * BUYING_PERCENTAGE_INCREASE) / 100; // we incerease price by 20 percent
 				returnedPrice = data - percentage;
 				PRICE = returnedPrice;
-				console.log('Price is = '+ PRICE)
+				console.log("Price is = " + PRICE);
 				return returnedPrice;
 			}
 			return;
 		}
 	});
 };
-
 
 // module.exports = {calculatePrice}
 export default calculatePrice;
