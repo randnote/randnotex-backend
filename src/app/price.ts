@@ -16,10 +16,7 @@ let BUYING_PERCENTAGE_INCREASE: number = 20;
 
 const calculatePriceClient = async (result: any) => {
 	let NEW_SUPPLY: number = await getSupply();
-	console.log(
-		"new-Supply is : " + NEW_SUPPLY + "CurrentSupply is : " + CURRENT_SUPPLY
-	);
-
+	
 	// this doesnt do anything, it just makes sure that the supply is never below 100;
 	if (NEW_SUPPLY === 0) {
 		NEW_SUPPLY = 100;
@@ -31,13 +28,13 @@ const calculatePriceClient = async (result: any) => {
 		let s: number = CURRENT_SUPPLY / NEW_SUPPLY;
 		s = s * 100;
 		PRICE = (PRICE * s) / 100;
-		console.log({
-			s: s,
-			price: PRICE,
-			CURRENT_SUPPLY: CURRENT_SUPPLY,
-			NEW_SUPPLY: NEW_SUPPLY,
-		});
-		console.log("price returned is: " + PRICE);
+		// console.log({
+		// 	s: s,
+		// 	price: PRICE,
+		// 	CURRENT_SUPPLY: CURRENT_SUPPLY,
+		// 	NEW_SUPPLY: NEW_SUPPLY,
+		// });
+		console.log('Price is = '+ PRICE)
 		result(null, PRICE);
 	}
 };
@@ -75,21 +72,20 @@ const calculatePrice = async (buy_sell?: boolean, buy_sell_value?: number) => {
 			if (buy_sell == true) {
 				// buy order... increase price:
 				console.log(
-					"my price is currently :" + data + "before manipulation"
+					"my price is currently :" + data + " before manipulation"
 				);
 				let percentage = (data * BUYING_PERCENTAGE_INCREASE) / 100; // we incerease price by 20 percent
 				returnedPrice = data + percentage;
-				console.log(
-					"new price after buy order(manipulation) is: " +
-						returnedPrice
-				);
+				
 				PRICE = returnedPrice;
+				console.log('Price is = '+ PRICE)
 				return returnedPrice;
 			} else if (buy_sell == false) {
 				// sell order... decrease price:
 				let percentage = (data * BUYING_PERCENTAGE_INCREASE) / 100; // we incerease price by 20 percent
 				returnedPrice = data - percentage;
 				PRICE = returnedPrice;
+				console.log('Price is = '+ PRICE)
 				return returnedPrice;
 			}
 			return;
@@ -97,10 +93,6 @@ const calculatePrice = async (buy_sell?: boolean, buy_sell_value?: number) => {
 	});
 };
 
-// write a controller that returns the price to the api....
-const getPriceCOntroller = () => {
-	return null;
-};
 
 // module.exports = {calculatePrice}
 export default calculatePrice;
