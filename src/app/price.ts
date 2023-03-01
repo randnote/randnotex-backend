@@ -14,9 +14,6 @@ let BUYING_PERCENTAGE_INCREASE: number = 20;
 	or you can look in the blockchain itself. !
 */
 
-
-
-
 const calculatePriceClient = async (result: any) => {
 	let NEW_SUPPLY: number = await getSupply();
 	console.log(
@@ -77,10 +74,15 @@ const calculatePrice = async (buy_sell?: boolean, buy_sell_value?: number) => {
 		} else {
 			if (buy_sell == true) {
 				// buy order... increase price:
-				console.log("my price is currently :" + data + "before manipulation");
+				console.log(
+					"my price is currently :" + data + "before manipulation"
+				);
 				let percentage = (data * BUYING_PERCENTAGE_INCREASE) / 100; // we incerease price by 20 percent
 				returnedPrice = data + percentage;
-				console.log("new price after buy order(manipulation) is: " + returnedPrice);
+				console.log(
+					"new price after buy order(manipulation) is: " +
+						returnedPrice
+				);
 				PRICE = returnedPrice;
 				return returnedPrice;
 			} else if (buy_sell == false) {
@@ -92,10 +94,8 @@ const calculatePrice = async (buy_sell?: boolean, buy_sell_value?: number) => {
 			}
 			return;
 		}
-	})
-
-
-}
+	});
+};
 
 // write a controller that returns the price to the api....
 const getPriceCOntroller = () => {
