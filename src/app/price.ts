@@ -3,9 +3,9 @@ import { Console } from "console";
 
 let PRICE: number = 1000;
 let CURRENT_SUPPLY: number = 100; // careful buddy, this starting supply can cause infite numbers if not set correctly
-let BUYING_PERCENTAGE_INCREASE: number = 5;
-let SELLING_PERCENTAGE_DECREASE: number = 0.7;
-let MINING_PERCENTAGE_DECREASE: number = 0.5;
+let BUYING_PERCENTAGE_INCREASE: number = 101.8;
+let SELLING_PERCENTAGE_DECREASE: number = 99;
+let MINING_PERCENTAGE_DECREASE: number = 99; // reduce price by 1 percent
 /*
 	THIS FILE IS VERY IMPORTANT:
 	- we re calculate price whenever there is a mine...
@@ -36,11 +36,12 @@ const calculatePriceClient = async (result: any) => {
 			NEW_SUPPLY
 	);
 	if (CURRENT_SUPPLY !== NEW_SUPPLY) {
-		let s: number = CURRENT_SUPPLY / NEW_SUPPLY;
-		s = s * MINING_PERCENTAGE_DECREASE;
-		PRICE = (PRICE * s);
+		// leave the supply out , since it messes up the equation:
+		// let s: number = CURRENT_SUPPLY / NEW_SUPPLY;
+		// s = s * MINING_PERCENTAGE_DECREASE;
+		PRICE = (PRICE * MINING_PERCENTAGE_DECREASE/100);
 		console.log({
-			s: s,
+			// s: s,
 			price: PRICE,
 			CURRENT_SUPPLY: CURRENT_SUPPLY,
 			NEW_SUPPLY: NEW_SUPPLY,
@@ -87,21 +88,20 @@ const calculatePrice = async (buy_sell?: boolean, buy_sell_value?: number) => {
 		} else {
 			if (buy_sell == true) {
 				// buy order... increase price:
-				console.log(
-					"my price is currently :" + data + " before manipulation"
-				);
-				let percentage = (data * BUYING_PERCENTAGE_INCREASE) / 100; // we incerease price by 20 percent
-				returnedPrice = data + percentage;
-
-				PRICE = returnedPrice;
+				// console.log(
+				// 	"my price is currently :" + data + " before manipulation"
+				// );
+				
+				// easy way to calculate price:
+				PRICE = data * BUYING_PERCENTAGE_INCREASE/100
+				returnedPrice = PRICE;
 				console.log("Price is = " + PRICE);
 				return returnedPrice;
 			} else if (buy_sell == false) {
 				// sell order... decrease price:
-				let percentage = (data * SELLING_PERCENTAGE_DECREASE) ; 
-				returnedPrice = data - percentage;
-				PRICE = returnedPrice;
+				PRICE = data * SELLING_PERCENTAGE_DECREASE/100
 				console.log("Price is = " + PRICE);
+				returnedPrice = PRICE;
 				return returnedPrice;
 			}
 			return;
