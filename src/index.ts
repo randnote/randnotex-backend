@@ -1,6 +1,9 @@
 #!/usr/bin/env nodejs:
 import express, { Application, Request, Response, NextFunction } from "express";
-import calculatePrice, { calculatePriceClient, calculatePriceSocket } from "./app/price";
+import calculatePrice, {
+	calculatePriceClient,
+	calculatePriceSocket,
+} from "./app/price";
 // import { calculatePriceClient } from "./app/price";
 const cors = require("cors");
 const bodyParser = require("body-parser");

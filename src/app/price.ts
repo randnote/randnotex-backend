@@ -18,7 +18,7 @@ let MINING_PERCENTAGE_DECREASE: number = 99; // reduce price by 1 percent
 const calculatePriceSocket = async () => {
 	//
 	return PRICE;
-}
+};
 const calculatePriceClient = async (result: any) => {
 	let NEW_SUPPLY: number = await getSupply();
 	console.log("new supply is : " + NEW_SUPPLY);
@@ -39,7 +39,7 @@ const calculatePriceClient = async (result: any) => {
 		// leave the supply out , since it messes up the equation:
 		// let s: number = CURRENT_SUPPLY / NEW_SUPPLY;
 		// s = s * MINING_PERCENTAGE_DECREASE;
-		PRICE = (PRICE * MINING_PERCENTAGE_DECREASE/100);
+		PRICE = (PRICE * MINING_PERCENTAGE_DECREASE) / 100;
 		console.log({
 			// s: s,
 			price: PRICE,
@@ -91,15 +91,15 @@ const calculatePrice = async (buy_sell?: boolean, buy_sell_value?: number) => {
 				// console.log(
 				// 	"my price is currently :" + data + " before manipulation"
 				// );
-				
+
 				// easy way to calculate price:
-				PRICE = data * BUYING_PERCENTAGE_INCREASE/100
+				PRICE = (data * BUYING_PERCENTAGE_INCREASE) / 100;
 				returnedPrice = PRICE;
 				console.log("Price is = " + PRICE);
 				return returnedPrice;
 			} else if (buy_sell == false) {
 				// sell order... decrease price:
-				PRICE = data * SELLING_PERCENTAGE_DECREASE/100
+				PRICE = (data * SELLING_PERCENTAGE_DECREASE) / 100;
 				console.log("Price is = " + PRICE);
 				returnedPrice = PRICE;
 				return returnedPrice;
