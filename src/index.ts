@@ -1,10 +1,26 @@
 #!/usr/bin/env nodejs:
 import express, { Application, Request, Response, NextFunction } from "express";
+require('dotenv').config()
+
+// set environmental variables
+let BLOCKCHAIN_API:string = '' 
+let FRONTEND_API:string = '' 
+let BACKEND_API:string = '' 
+if (process.env.NODE_ENV == 'development') {
+	 BLOCKCHAIN_API = 'http://localhost:8033' 
+	 FRONTEND_API = 'http://localhost:3002' 
+	 BACKEND_API = 'http://localhost:8024'
+} else if(process.env.NODE_ENV == 'production'){
+	BLOCKCHAIN_API = 'https://blockchain.randnotex.co.za' 
+	FRONTEND_API = 'https://randnotex.co.za' 
+	BACKEND_API = 'https://server.randnotex.co.za'
+}
+
+
 import calculatePrice, {
 	calculatePriceClient,
 	calculatePriceSocket,
 } from "./app/price";
-// import { calculatePriceClient } from "./app/price";
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const app: Application = express();
@@ -14,13 +30,12 @@ const http = require("http");
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 var allowedOrigins = [
-	"http://localhost:3000",
-	"http://locahost:3000/admin",
-	"http://localhost:3000/signup",
-	"http://localhost:3000/signin",
-	"http://localhost:3000/dashboard",
-	"http://localhost:3000/deposit",
-	"*",
+	`${FRONTEND_API}`,
+	`${FRONTEND_API}/admin`,
+	`${FRONTEND_API}/signup`,
+	`${FRONTEND_API}/signin`,
+	`${FRONTEND_API}/dashboard`,
+	`${FRONTEND_API}/deposit`
 ];
 app.use(
 	cors({
@@ -47,8 +62,7 @@ let interval;
 const server = http.createServer(app);
 const io = require("socket.io")(server, {
 	cors: {
-		origin: ["http://localhost:3000", "http://localhost:3000/chart", "*"],
-		// origins: "*:*",
+		origin: [`${FRONTEND_API}`, `${FRONTEND_API}/chart` ],
 		methods: ["GET", "POST"],
 	},
 });
@@ -84,8 +98,12 @@ const getApiAndEmit = async (socket: any) => {
 	});
 };
 
+export {BLOCKCHAIN_API, FRONTEND_API, BACKEND_API};
+
 require("./app/config/createTables");
 require("./app/routes/index.routers")(app);
+
+
 
 // require('./app/emails/signup.email')
 server.listen(8024, () => console.log(`server started on port 8024`));

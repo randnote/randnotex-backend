@@ -4,6 +4,7 @@ import { PUBLICKEY, PRIVATEKEY } from "../config/randnoteSiteKey";
 import Axios from "axios";
 import updateBalance from "../updateBalance";
 import calculatePrice from "../price";
+import { BLOCKCHAIN_API, FRONTEND_API, BACKEND_API } from "../..";
 
 // Create transactionWebsite:
 exports.create = (req: Request, res: Response) => {
@@ -35,7 +36,7 @@ exports.create = (req: Request, res: Response) => {
 		} else {
 			if (req.body.ordertype == "buy") {
 				//get first...
-				Axios.get(`http://localhost:8024/getKeys/${req.body.user_id}`)
+				Axios.get(`${BACKEND_API}/getKeys/${req.body.user_id}`)
 					.then((newRes) => {
 						let transactionInformation = {
 							fromAddress: PUBLICKEY,
@@ -46,7 +47,7 @@ exports.create = (req: Request, res: Response) => {
 						let snack = JSON.stringify(transactionInformation);
 
 						// now , send the info to the blockchain
-						Axios.post(`http://localhost:8033/transaction`, {
+						Axios.post(`${BLOCKCHAIN_API}/transaction`, {
 							obj: snack,
 						})
 							.then((res) => {
@@ -68,7 +69,7 @@ exports.create = (req: Request, res: Response) => {
 				res.send(data);
 			} else if (req.body.ordertype == "sell") {
 				console.log("we wanna sell");
-				Axios.get(`http://localhost:8024/getKeys/${req.body.user_id}`)
+				Axios.get(`${BACKEND_API}/getKeys/${req.body.user_id}`)
 					.then((newRes) => {
 						let transactionInformation = {
 							fromAddress: newRes.data[0].publicKey,
@@ -79,7 +80,7 @@ exports.create = (req: Request, res: Response) => {
 						let snack = JSON.stringify(transactionInformation);
 
 						// now , send the info to the blockchain
-						Axios.post(`http://localhost:8033/transaction`, {
+						Axios.post(`${BLOCKCHAIN_API}/transaction`, {
 							obj: snack,
 						})
 							.then((res) => {

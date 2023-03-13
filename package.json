@@ -7,7 +7,7 @@
 		"dist"
 	],
 	"scripts": {
-		"prod": "cd ./dist && NODE_ENV=production node ./index.js",
+		"prod": "yarn run build && cd ./dist && NODE_ENV=production  node ./index.js",
 		"dev": "yarn run build && cd ./dist && NODE_ENV=development node ./index.js",
 		"build": " tsc ",
 		"prepare": "npm run build",

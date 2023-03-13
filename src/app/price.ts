@@ -1,5 +1,5 @@
 import Axios from "axios";
-import { Console } from "console";
+import { BLOCKCHAIN_API } from "..";
 
 let PRICE: number = 1000;
 let CURRENT_SUPPLY: number = 100; // careful buddy, this starting supply can cause infite numbers if not set correctly
@@ -61,7 +61,7 @@ const getSupply = async () => {
 	let supply: number = 0;
 
 	// remember to add env variable here...
-	await Axios.get(`http://localhost:8033/supply`)
+	await Axios.get(`${BLOCKCHAIN_API}/supply`)
 		.then(async (response: any) => {
 			supply = await response.data.supply;
 			return supply;
