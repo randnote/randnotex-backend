@@ -99,6 +99,16 @@ const calculatePrice = async (buy_sell?: boolean, buy_sell_value?: number) => {
 				return returnedPrice;
 			} else if (buy_sell == false) {
 				// sell order... decrease price:
+				/*
+					Here, i try to control price.
+					When price gets too high, increase the value at which a sell would influence the price!
+				*/
+
+				if(PRICE > 10000){
+					SELLING_PERCENTAGE_DECREASE = 50
+				}else{
+					SELLING_PERCENTAGE_DECREASE = 99
+				}
 				PRICE = (data * SELLING_PERCENTAGE_DECREASE) / 100;
 				console.log("Price is = " + PRICE);
 				returnedPrice = PRICE;
