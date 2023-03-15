@@ -16,7 +16,6 @@ let MINING_PERCENTAGE_DECREASE: number = 99; // reduce price by 1 percent
 	or you can look in the blockchain itself. !
 */
 const calculatePriceSocket = async () => {
-	//
 	return PRICE;
 };
 const calculatePriceClient = async (result: any) => {
@@ -88,10 +87,7 @@ const calculatePrice = async (buy_sell?: boolean, buy_sell_value?: number) => {
 		} else {
 			if (buy_sell == true) {
 				// buy order... increase price:
-				// console.log(
-				// 	"my price is currently :" + data + " before manipulation"
-				// );
-
+				
 				// easy way to calculate price:
 				PRICE = (data * BUYING_PERCENTAGE_INCREASE) / 100;
 				returnedPrice = PRICE;
@@ -119,6 +115,5 @@ const calculatePrice = async (buy_sell?: boolean, buy_sell_value?: number) => {
 	});
 };
 
-// module.exports = {calculatePrice}
 export default calculatePrice;
 export { calculatePriceClient, calculatePriceSocket };
