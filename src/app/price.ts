@@ -87,7 +87,7 @@ const calculatePrice = async (buy_sell?: boolean, buy_sell_value?: number) => {
 		} else {
 			if (buy_sell == true) {
 				// buy order... increase price:
-				
+
 				// easy way to calculate price:
 				PRICE = (data * BUYING_PERCENTAGE_INCREASE) / 100;
 				returnedPrice = PRICE;
