@@ -4,11 +4,9 @@ RUN yarn global add nodemon
 
 WORKDIR /backend
 
-COPY package.json .
-
-RUN yarn install 
-
+# COPY package.json .
 COPY . .
+RUN yarn install 
 
 EXPOSE 8024
 

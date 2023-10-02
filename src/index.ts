@@ -99,8 +99,8 @@ const getApiAndEmit = async (socket: any) => {
 
 export { BLOCKCHAIN_API, FRONTEND_API, BACKEND_API };
 
-require("./app/config/createTables");
-require("./app/routes/index.routers")(app);
+// require("./app/config/createTables");
+// require("./app/routes/index.routers")(app);
 
 // require('./app/emails/signup.email')
 server.listen(8024, () => console.log(`server started on port 8024`));
