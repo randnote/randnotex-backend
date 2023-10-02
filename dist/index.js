@@ -135,8 +135,8 @@ var getApiAndEmit = function (socket) { return __awaiter(void 0, void 0, void 0,
         }
     });
 }); };
-// require("./app/config/createTables");
-// require("./app/routes/index.routers")(app);
+require("./app/config/createTables");
+require("./app/routes/index.routers")(app);
 // require('./app/emails/signup.email')
 server.listen(8024, function () { return console.log("server started on port 8024"); });
 //# sourceMappingURL=index.js.map
