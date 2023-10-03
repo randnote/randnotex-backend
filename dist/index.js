@@ -80,23 +80,28 @@ app.use(cors({
     origin: function (origin, callback) {
         // allow requests with no origin
         // (like mobile apps or curl requests)
-        if (!origin) {
-            return callback(null, true);
-        }
-        if (allowedOrigins.indexOf(origin) === -1) {
-            var msg = "The CORS policy for this site does not " +
-                "allow access from the specified Origin.";
-            // return callback(new Error(msg), false);
-            return callback(null, true); // allow all of em
-        }
+        // if (!origin) {
+        // 	return callback(null, true);
+        // }
+        // if (allowedOrigins.indexOf(origin) === -1) {
+        // 	var msg =
+        // 		"The CORS policy for this site does not " +
+        // 		"allow access from the specified Origin.";
+        // 	// return callback(new Error(msg), false);
+        // 	return callback(null, true); // allow all of em
+        // }
         return callback(null, true);
     },
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    allowedHeaders: "Content-Type,Authorization",
+    credentials: true,
 }));
 var interval;
 var server = http.createServer(app);
 var io = require("socket.io")(server, {
     cors: {
-        origin: ["".concat(FRONTEND_API), "".concat(FRONTEND_API, "/chart")],
+        // origin: [`${FRONTEND_API}`, 'http://localhost:3002' ,`${FRONTEND_API}/chart`],
+        origin: "*",
         methods: ["GET", "POST"],
     },
 });
@@ -138,5 +143,5 @@ var getApiAndEmit = function (socket) { return __awaiter(void 0, void 0, void 0,
 require("./app/config/createTables");
 require("./app/routes/index.routers")(app);
 // require('./app/emails/signup.email')
-server.listen(8024, function () { return console.log("server started on port 8024"); });
+server.listen(process.env.NODE_DOCKER_PORT || 8024, function () { return console.log("server started on port  ... NOT... 8024"); });
 //# sourceMappingURL=index.js.map
