@@ -6,10 +6,11 @@ require("dotenv").config();
 let BLOCKCHAIN_API: string = "";
 let FRONTEND_API: string = "";
 let BACKEND_API: string = "";
+process.env.NODE_ENV == "development"
 if (process.env.NODE_ENV == "development") {
-	BLOCKCHAIN_API = "http://localhost:8034";
-	FRONTEND_API = "http://localhost:3002";
-	BACKEND_API = "http://localhost:8024";
+	BLOCKCHAIN_API = "http://blockchain:8034";
+	FRONTEND_API = "http://frontend:3002";
+	BACKEND_API = "http://127.0.0.1:8024";
 } else if (process.env.NODE_ENV == "production") {
 	BLOCKCHAIN_API = "https://blockchain.randnotex.co.za";
 	FRONTEND_API = "https://randnotex.co.za";
@@ -56,7 +57,7 @@ app.use(
 		},
 		methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Specify allowed HTTP methods
 		allowedHeaders: "Content-Type,Authorization", // Specify allowed headers
-		credentials: true, 
+		credentials: true,
 	})
 );
 let interval;
@@ -107,4 +108,6 @@ require("./app/config/createTables");
 require("./app/routes/index.routers")(app);
 
 // require('./app/emails/signup.email')
-server.listen(process.env.NODE_DOCKER_PORT || 8024, () => console.log(`server started on port  ... NOT... 8024`));
+server.listen(process.env.NODE_DOCKER_PORT || 8024, () =>
+	console.log(`server started on port  ... NOT... 8024`)
+);
